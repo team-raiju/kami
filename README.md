@@ -1,4 +1,4 @@
-# Kami
+# ⛩️ Kami
 
 > Kami is the Japanese word for a deity, divinity, or spirit.
 
