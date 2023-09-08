@@ -1,5 +1,7 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:kami/components/custom_icons.dart';
+import 'package:kami/screens/bluetooth.dart';
 import 'package:kami/screens/logs.dart';
 import 'package:kami/services/logging.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +9,10 @@ import 'package:provider/provider.dart';
 import 'package:kami/services/bluetooth.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
   runApp(
     MultiProvider(
       providers: [
@@ -26,6 +32,7 @@ class KamiApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Kami',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(
@@ -52,11 +59,11 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.onPrimary,
-        title: const Text("Kami"),
+        title: const Icon(CustomIcons.torii),
         actions: [
           IconButton(
-            onPressed: () => context.read<BluetoothService>().stopScan(),
-            icon: const Icon(Icons.stop_rounded),
+            onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const BluetoothPage())),
+            icon: const Icon(Icons.bluetooth_rounded),
           ),
           IconButton(
             onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LogsPage())),
@@ -64,14 +71,7 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-      body: ListView(
-        children: context.watch<BluetoothService>().foundDevices.values.map<Text>((l) => Text(l.id)).toList(),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => context.read<BluetoothService>().startScan(),
-        tooltip: 'Increment',
-        child: const Icon(Icons.scanner_rounded),
-      ),
+      body: Text(context.watch<BluetoothService>().data.toString()),
     );
   }
 }

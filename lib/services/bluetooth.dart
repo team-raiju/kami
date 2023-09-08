@@ -8,17 +8,20 @@ import 'package:kami/services/logging.dart';
 class BluetoothService extends ChangeNotifier {
   final Uuid _serviceUuid = Uuid.parse("0000ffe0-0000-1000-8000-00805f9b34fb");
   final Uuid _characteristicUuid = Uuid.parse("0000ffe1-0000-1000-8000-00805f9b34fb");
-
   final _ble = FlutterReactiveBle();
-
   final LoggingService _logger;
+
+  StreamSubscription<DiscoveredDevice>? _scanSubscription;
+  StreamSubscription<ConnectionStateUpdate>? _connectSubscription;
+  String? _connectedDevice;
+  List<int> _latestDataReceived = [];
 
   BleStatus status = BleStatus.unknown;
   var foundDevices = <String, DiscoveredDevice>{};
-  String? _connectedDevice;
   get isConnected => _connectedDevice != null;
-
-  StreamSubscription<DiscoveredDevice>? _scanSubscription;
+  get isScanning => _scanSubscription != null;
+  get deviceAddress => _connectedDevice;
+  get data => _latestDataReceived;
 
   BluetoothService(this._logger) {
     _ble.statusStream.listen((status) {
@@ -60,16 +63,15 @@ class BluetoothService extends ChangeNotifier {
   void connect(String deviceId) {
     stopScan();
 
-    _ble
+    _connectSubscription = _ble
         .connectToAdvertisingDevice(
-      id: deviceId,
-      withServices: [_serviceUuid],
-      servicesWithCharacteristicsToDiscover: {
-        _serviceUuid: [_characteristicUuid]
-      },
-      prescanDuration: const Duration(seconds: 2),
-      connectionTimeout: const Duration(seconds: 2),
-    )
+            id: deviceId,
+            withServices: [_serviceUuid],
+            servicesWithCharacteristicsToDiscover: {
+              _serviceUuid: [_characteristicUuid]
+            },
+            prescanDuration: const Duration(seconds: 2),
+            connectionTimeout: const Duration(seconds: 2))
         .listen(
       (connectionState) {
         if (connectionState.connectionState == DeviceConnectionState.connected) {
@@ -81,9 +83,15 @@ class BluetoothService extends ChangeNotifier {
             deviceId: deviceId,
           );
 
-          _ble.subscribeToCharacteristic(characteristic).listen((data) {
-            _logger.info("Data received: $data");
-          });
+          _ble.subscribeToCharacteristic(characteristic).listen(
+            (data) {
+              _latestDataReceived = data;
+              _logger.info("Data received: $data");
+              notifyListeners();
+            },
+            onError: (error) => _logger.error("BLE Characteristic Error: $error"),
+            onDone: () => _logger.warn("BLE Characteristic Subscription Done"),
+          );
 
           notifyListeners();
         }
@@ -92,6 +100,19 @@ class BluetoothService extends ChangeNotifier {
         _logger.error("BLE Error: $error");
         notifyListeners();
       },
+      onDone: () {
+        _logger.warn("BLE Connect Subscription Done");
+      },
     );
+  }
+
+  void disconnect() async {
+    if (_connectedDevice == null) {
+      return;
+    }
+
+    await _connectSubscription!.cancel();
+    _connectedDevice = null;
+    notifyListeners();
   }
 }
