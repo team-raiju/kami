@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_reactive_ble/flutter_reactive_ble.dart';
-import 'package:kami/services/bluetooth.dart';
 import 'package:provider/provider.dart';
+
+import 'package:kami/services/bluetooth.dart';
 
 class BluetoothListTile extends StatelessWidget {
   final DiscoveredDevice device;

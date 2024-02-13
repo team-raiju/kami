@@ -1,6 +1,8 @@
 import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 enum LogSeverity { debug, info, warn, error }
 
@@ -41,6 +43,14 @@ class LoggingService extends ChangeNotifier {
   error(String message) {
     log("ERROR: $message");
     _logs.insert(0, LogEntry(LogSeverity.error, message));
+    Fluttertoast.showToast(
+        msg: "Error",
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.red,
+        textColor: Colors.white,
+        fontSize: 16.0);
     notifyListeners();
   }
 

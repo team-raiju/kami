@@ -47,6 +47,7 @@ class BluetoothService extends ChangeNotifier {
       },
       onError: (error) => _logger.error("BLE Error: $error"),
     );
+    notifyListeners();
   }
 
   void stopScan() async {
@@ -111,6 +112,7 @@ class BluetoothService extends ChangeNotifier {
       return;
     }
 
+    foundDevices.clear();
     await _connectSubscription!.cancel();
     _connectedDevice = null;
     notifyListeners();
