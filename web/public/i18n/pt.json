@@ -1,0 +1,28 @@
+{
+  "track": {
+    "title": "Editor de Pista",
+    "import_points": "Importar Pontos",
+    "import_markers": "Importar Marcadores"
+  },
+  "article": {
+    "intro": "Introdução",
+    "mec": "Mecânica",
+    "estrutura": "Estrutura",
+    "engrenagens": "Engrenagens",
+    "ventoinhas": "Ventoinhas",
+    "motores": "Motores",
+    "hardware": "Hardware",
+    "regulador": "Regulador de Tensão",
+    "uc": "Microcontrolador",
+    "eeprom": "EEPROM Externa",
+    "imu": "IMU",
+    "usb": "USB",
+    "bt": "Bluetooth",
+    "linesensors": "Sensores de Linha",
+    "driver": "Driver do Motor",
+    "firmware": "Firmware",
+    "map": "Mapeamento",
+    "controle": "Controle",
+    "extras": "Extras"
+  }
+}

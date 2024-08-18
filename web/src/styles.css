@@ -1,0 +1,92 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ul,
+  ol {
+    list-style: revert;
+    margin: revert;
+    padding: revert;
+  }
+}
+
+:root {
+  scroll-behavior: smooth;
+}
+
+pre::-webkit-scrollbar-track {
+  border: 5px solid hsl(220, 13%, 18%);
+  @apply bg-white;
+}
+
+pre::-webkit-scrollbar {
+  @apply w-[10px];
+}
+
+pre::-webkit-scrollbar-thumb {
+  border: 3px solid hsl(220, 13%, 18%);
+  @apply bg-blue-300;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+table {
+  width: 100%;
+}
+
+td,
+th {
+  padding: 0;
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
+  border-bottom-color: rgba(255, 255, 255, 0.12);
+}
+
+/* Markdown */
+
+markdown h2,
+h3,
+h4 {
+  @apply !mt-4;
+}
+
+markdown a {
+  @apply text-cyan-500;
+}
+
+markdown figure {
+  @apply text-center italic mb-4 text-sm;
+}
+
+markdown figure img {
+  @apply m-auto;
+}
+
+markdown pre {
+  @apply overflow-x-auto w-full;
+}
+
+markdown pre code {
+  @apply min-w-full w-0 inline-block;
+}
+
+markdown blockquote:before {
+  content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 -960 960 960' fill='%2393c5fd'%3E%3Cpath d='M440-280h80v-240h-80v240Zm40-320q17 0 28.5-11.5T520-640q0-17-11.5-28.5T480-680q-17 0-28.5 11.5T440-640q0 17 11.5 28.5T480-600Zm0 520q-83 0-156-31.5T197-197q-54-54-85.5-127T80-480q0-83 31.5-156T197-763q54-54 127-85.5T480-880q83 0 156 31.5T763-763q54 54 85.5 127T880-480q0 83-31.5 156T763-197q-54 54-127 85.5T480-80Zm0-80q134 0 227-93t93-227q0-134-93-227t-227-93q-134 0-227 93t-93 227q0 134 93 227t227 93Zm0-320Z'/%3E%3C/svg%3E");
+  @apply absolute left-[10px] top-[3px] w-[16px] h-[16px];
+}
+
+markdown blockquote {
+  @apply border-l-4 border-l-blue-300 ml-[30px] mb-[0.75em] pl-[46px] py-[10px] relative;
+}
+
+markdown blockquote > p {
+  @apply !mb-0 italic text-gray-300;
+}

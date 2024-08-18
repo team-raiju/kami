@@ -1,0 +1,5 @@
+<div #container class="w-full h-full flex flex-col items-center p-2">
+  <div #childContainer class="h-full" [style.width]="width() + 'px'">
+    <canvas baseChart type="scatter" [datasets]="data()" [options]="options()"></canvas>
+  </div>
+</div>

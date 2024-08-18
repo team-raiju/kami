@@ -1,0 +1,25 @@
+<div class="h-full flex flex-col">
+  <ng-container *transloco="let t; prefix: 'track'">
+    <mat-toolbar>
+      <a mat-icon-button href="/">
+        <mat-icon>home</mat-icon>
+      </a>
+      <span class="ml-2">{{ t("title") }}</span>
+      <span class="flex-auto"></span>
+      <button type="button" mat-button (click)="importPoints(false)">
+        <mat-icon>file_open</mat-icon>
+        {{ t("import_points") }}
+      </button>
+      <button type="button" mat-button (click)="importPoints(true)">
+        <mat-icon>file_open</mat-icon>
+        {{ t("import_markers") }}
+      </button>
+      <language-switcher></language-switcher>
+    </mat-toolbar>
+    <div class="flex-grow bg-black">
+      @if (hasPoints()) {
+      <track-editor></track-editor>
+      }
+    </div>
+  </ng-container>
+</div>
