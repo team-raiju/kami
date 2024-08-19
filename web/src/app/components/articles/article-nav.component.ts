@@ -36,16 +36,14 @@ export type NavData = (string | NavData)[];
 export class InnerListComponent {
   sections = input.required<NavData>();
 
-  constructor(private viewport: ViewportScroller) {
-    viewport.setOffset([0, 70]);
-  }
-
   public goToTop() {
     this.goTo(this.sections().flat()[0] as string);
   }
 
   goTo(target: string) {
-    this.viewport.scrollToAnchor(target);
+    document.getElementById(target)?.scrollIntoView({
+      behavior: "smooth",
+    });
   }
 
   isString(obj: string | NavData): obj is string {

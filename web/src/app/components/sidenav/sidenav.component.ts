@@ -42,7 +42,7 @@ export const sideNavOpened = signal(false);
         </div>
       </div>
     </mat-sidenav>
-    <mat-sidenav-content class="h-full">
+    <mat-sidenav-content class="h-full scroll-p-[70px]">
       <ng-content></ng-content>
     </mat-sidenav-content>
   </mat-sidenav-container>`,
