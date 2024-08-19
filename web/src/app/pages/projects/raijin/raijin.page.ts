@@ -11,6 +11,7 @@ import { ArticleNavComponent } from "../../../components/articles/article-nav.co
 import { TranslocoService } from "@jsverse/transloco";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { fadeInOut } from "../../../utils/animations";
+import { SideNavTogglerComponent } from "../../../components/sidenav/sidenav-toggler.component";
 
 @Component({
   standalone: true,
@@ -24,6 +25,7 @@ import { fadeInOut } from "../../../utils/animations";
     MatToolbarModule,
     MatButtonModule,
     PdfJsViewerModule,
+    SideNavTogglerComponent,
   ],
   animations: [fadeInOut()],
 })

@@ -103,9 +103,10 @@ $PWM_{r} = 2.428 * 131.25 = 318$
 Alguns blogs japoneses:
 
 - [Underbird](https://underbirdworks.blogspot.com/2023/12/2023-underbird3x.html)
-- [Dr. Shabutsu's Robot Workshop](http://ak-rcroom.com/sakuhin/robotracer/robotracer.html)
+- [Aegis](http://ak-rcroom.com/sakuhin/robotracer/robotracer.html)
 - [Sora](https://garberas.com/archives/2363)
 - [Aniki Hirai](http://anikinonikki.cocolog-nifty.com/)
 - [hayabusa0213](https://hayabusa0213.hatenablog.com/)
+- [hidejr1053](http://hidejrlab.blog104.fc2.com/blog-date-202407.html)
 
 </details>

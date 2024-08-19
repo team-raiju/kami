@@ -23,5 +23,9 @@
     "firmware": "Firmware",
     "map": "Track Mapping",
     "controle": "Control"
+  },
+  "side": {
+    "projects": "Projects",
+    "tools": "Tools"
   }
 }
