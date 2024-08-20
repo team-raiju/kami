@@ -88,6 +88,49 @@ $PWM_{r} = 2.428 * 131.25 = 318$
 
 <details>
 <summary>FAQ</summary>
+
+<details>
+<summary>Qual a precisão da PWM vocês usam?</summary>
+
+A precisão da PWM do motor é de 1000. Isto é existem 1000 valores possíveis de PWM. Considerando o uso de 3S, por exemplo, temos que cada "unidade de PWM" equivale a 12.6mV.
+Para efeito de comparação, caso fosse de 255, cada unidade seria 49.4mV
+
+</details>
+
+<details>
+<summary>Qual frequência de PWM vocês usam?</summary>
+
+Usamos 50KHz.
+
+Em linhas gerais quanto maior a frequência, mais suave fica a resposta do motor e a operação fica mais eficiente e com menos barulho. Entretanto com maior frequência, mais aumenta a temperatura no driver do motor.
+
+</details>
+
+<details>
+<summary>Faz diferença usar valores analógicos para os sensores de linha?</summary>
+
+Faz bastante diferença; A resposta do controle fica mais suave porque há valores mais discretos de variação do erro lido pelo robô.
+
+</details>
+
+<details>
+<summary>Caso não tenha IMU, como calcular a curvatura da pista?</summary>
+
+Caso o robô não utilize IMU, uma aproximação do ângulo do robô pode ser obtida também com:
+
+$\theta = \theta {anterior} + \frac{(\Delta S{direita} - \Delta S_{esquerda})}{L}$
+
+Sendo ${L}$ a distância entre as rodas da direita e da esquerda.
+
+</details>
+
+<details>
+<summary>As ventoinhas fazem muita diferença?</summary>
+
+Sim, sem as ventoinhas chegamos em no máximo ~20% da velocidade máxima do robô nas curvas. Ja com elas é possível chegar em ~50%.
+
+</details>
+
 </details>
 
 <br>
@@ -103,9 +146,10 @@ $PWM_{r} = 2.428 * 131.25 = 318$
 Alguns blogs japoneses:
 
 - [Underbird](https://underbirdworks.blogspot.com/2023/12/2023-underbird3x.html)
-- [Dr. Shabutsu's Robot Workshop](http://ak-rcroom.com/sakuhin/robotracer/robotracer.html)
+- [Aegis](http://ak-rcroom.com/sakuhin/robotracer/robotracer.html)
 - [Sora](https://garberas.com/archives/2363)
 - [Aniki Hirai](http://anikinonikki.cocolog-nifty.com/)
 - [hayabusa0213](https://hayabusa0213.hatenablog.com/)
+- [hidejr1053](http://hidejrlab.blog104.fc2.com/blog-date-202407.html)
 
 </details>

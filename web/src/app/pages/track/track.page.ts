@@ -7,11 +7,20 @@ import { TranslocoDirective } from "@jsverse/transloco";
 import { Point, TrackService } from "../../services/track.service";
 import { TrackEditorComponent } from "./track-editor/track-editor.component";
 import { LanguageSwitcherComponent } from "../../components/language-switch.component";
+import { SideNavTogglerComponent } from "../../components/sidenav/sidenav-toggler.component";
 
 @Component({
   standalone: true,
   templateUrl: "./track.page.html",
-  imports: [TrackEditorComponent, MatToolbarModule, MatButtonModule, MatIconModule, TranslocoDirective, LanguageSwitcherComponent],
+  imports: [
+    TrackEditorComponent,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    TranslocoDirective,
+    LanguageSwitcherComponent,
+    SideNavTogglerComponent,
+  ],
 })
 export class TrackPage {
   hasPoints = computed(() => this.trackService.track().length > 0);

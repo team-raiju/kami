@@ -90,3 +90,11 @@ markdown blockquote {
 markdown blockquote > p {
   @apply !mb-0 italic text-gray-300;
 }
+
+markdown details > * {
+  @apply !ml-7;
+}
+
+markdown details > summary {
+  @apply !ml-0;
+}
