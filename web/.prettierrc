@@ -2,5 +2,11 @@
   "useTabs": false,
   "singleQuote": false,
   "trailingComma": "all",
-  "printWidth": 150
+  "printWidth": 150,
+  "overrides": [{
+    "files": ["*.html"],
+    "options": {
+      "parser": "angular"
+    }
+  }]
 }
