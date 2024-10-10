@@ -102,29 +102,52 @@ export class FujinConfigPage {
     }
   }
 
-  paramTypes: Record<string, number> = {
-    kp: 0x00,
-    ki: 0x01,
-    kd: 0x02,
-    min_move_speed: 0x03,
-    min_turn_speed: 0x04,
-    fix_position_speed: 0x05,
-    search_speed: 0x06,
-    angular_speed: 0x07,
-    run_speed: 0x08,
-    linear_acceleration: 0x09,
-    angular_acceleration: 0x0a,
+  static readonly paramTypes = {
+    angular_kp: 0x00,
+    angular_ki: 0x01,
+    angular_kd: 0x02,
+    wall_kp: 0x03,
+    wall_ki: 0x04,
+    wall_kd: 0x05,
+    min_move_speed: 0x06,
+    min_turn_speed: 0x07,
+    fix_position_speed: 0x08,
+    search_speed: 0x09,
+    angular_speed: 0x0a,
+    run_speed: 0x0b,
+    linear_acceleration: 0x0c,
+    angular_acceleration: 0x0d,
   };
 
   values: Record<string, number> = {};
 
-  async send(which: string) {
-    const buffer = new ArrayBuffer(7);
+  async send_param(which: keyof typeof FujinConfigPage.paramTypes) {
+    const buffer = new ArrayBuffer(20);
     const view = new DataView(buffer);
     view.setUint8(0, 0xff);
     view.setUint8(1, 0x02);
-    view.setUint8(2, this.paramTypes[which]);
-    view.setFloat32(3, this.values[which]);
+    view.setUint8(2, FujinConfigPage.paramTypes[which]);
+    view.setFloat32(3, this.values[which], true);
+
+    const toSend = new Uint8Array(buffer);
+    console.log(toSend);
+    this.char?.writeValueWithoutResponse(toSend);
+  }
+
+  static readonly commands = {
+    stop: 0x00,
+    b1Short: 0x01,
+    b2Short: 0x02,
+    b1Long: 0x03,
+    b2Long: 0x04,
+  };
+
+  async send_command(which: keyof typeof FujinConfigPage.commands) {
+    const buffer = new ArrayBuffer(20);
+    const view = new DataView(buffer);
+    view.setUint8(0, 0xff);
+    view.setUint8(1, 0x00);
+    view.setUint8(2, FujinConfigPage.commands[which]);
 
     const toSend = new Uint8Array(buffer);
     console.log(toSend);
