@@ -71,21 +71,23 @@ export class FujinConfigPage {
 
     // Maze
     if (data.getUint8(1) == 0x05) {
-      const xy = data.getUint8(2);
-      const walls = data.getUint8(3);
-      const visited = data.getUint8(4);
-      const distance = data.getUint8(5);
+      for (const i of [2, 6]) {
+        const xy = data.getUint8(i);
+        const walls = data.getUint8(i + 1);
+        const visited = data.getUint8(i + 2);
+        const distance = data.getUint8(i + 3);
 
-      const x = (xy & 0xf0) >> 4;
-      const y = xy & 0x0f;
+        const x = (xy & 0xf0) >> 4;
+        const y = xy & 0x0f;
 
-      // this.log(`${xy}[(${x},${y})] ${walls} ${visited} ${distance}`);
+        // this.log(`${xy}[(${x},${y})] ${walls} ${visited} ${distance}`);
 
-      this.maze.update(x, y, (cell) => {
-        cell.walls = walls;
-        cell.visited = visited == 0x01;
-        cell.distance = distance;
-      });
+        this.maze.update(x, y, (cell) => {
+          cell.walls = walls;
+          cell.visited = visited == 0x01;
+          cell.distance = distance;
+        });
+      }
     }
 
     // Sensors
