@@ -30,7 +30,6 @@ class Cell {
 }
 
 @Component({
-  standalone: true,
   templateUrl: "./maze.component.html",
   selector: "maze",
   styles: `

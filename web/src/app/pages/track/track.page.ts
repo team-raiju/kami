@@ -10,7 +10,6 @@ import { LanguageSwitcherComponent } from "../../components/language-switch.comp
 import { SideNavTogglerComponent } from "../../components/sidenav/sidenav-toggler.component";
 
 @Component({
-  standalone: true,
   templateUrl: "./track.page.html",
   imports: [
     TrackEditorComponent,

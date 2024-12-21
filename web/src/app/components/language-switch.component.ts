@@ -5,7 +5,6 @@ import { toSignal } from "@angular/core/rxjs-interop";
 import { TranslocoService } from "@jsverse/transloco";
 
 @Component({
-  standalone: true,
   selector: "language-switcher",
   template: `<button mat-icon-button [title]="'Current Language: ' + currentLanguage()" (click)="toggleLanguage()">
     <mat-icon>language</mat-icon>

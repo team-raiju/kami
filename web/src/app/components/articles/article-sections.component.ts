@@ -5,7 +5,6 @@ import { TranslocoService } from "@jsverse/transloco";
 import { MarkdownModule } from "ngx-markdown";
 
 @Component({
-  standalone: true,
   selector: "article-sections",
   template: `
     <div class="block text-justify">

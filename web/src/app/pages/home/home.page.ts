@@ -3,5 +3,5 @@ import { LanguageSwitcherComponent } from "../../components/language-switch.comp
 import { SideNavComponent } from "../../components/sidenav/sidenav.component";
 import { SideNavTogglerComponent } from "../../components/sidenav/sidenav-toggler.component";
 
-@Component({ standalone: true, templateUrl: "./home.page.html", imports: [LanguageSwitcherComponent, SideNavComponent, SideNavTogglerComponent] })
+@Component({ templateUrl: "./home.page.html", imports: [LanguageSwitcherComponent, SideNavComponent, SideNavTogglerComponent] })
 export class HomePage {}

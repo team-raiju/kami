@@ -7,7 +7,6 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/examples/jsm/loaders/DRACOLoader.js";
 
 @Component({
-  standalone: true,
   selector: "raijin-3d",
   template: `<canvas #raijinCanvas id="raijin-canvas" class="!w-full !h-full"></canvas>`,
 })

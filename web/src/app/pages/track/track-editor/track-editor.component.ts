@@ -7,7 +7,6 @@ import { ChartData, ChartOptions, Point } from "chart.js";
 @Component({
   selector: "track-editor",
   templateUrl: "./track-editor.component.html",
-  standalone: true,
   imports: [BaseChartDirective],
 })
 export class TrackEditorComponent {

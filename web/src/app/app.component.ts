@@ -6,7 +6,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "app-root",
-  standalone: true,
   templateUrl: "./app.component.html",
   imports: [RouterOutlet, SideNavComponent],
 })

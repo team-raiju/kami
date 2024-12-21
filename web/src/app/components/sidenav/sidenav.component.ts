@@ -7,7 +7,6 @@ import { MatIconModule } from "@angular/material/icon";
 export const sideNavOpened = signal(false);
 
 @Component({
-  standalone: true,
   selector: "side-nav",
   template: `<mat-sidenav-container class="h-full">
     <mat-sidenav [(opened)]="opened" class="w-[200px]">

@@ -6,7 +6,6 @@ import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
 
 @Component({
-  standalone: true,
   templateUrl: "./fujin-config.page.html",
   imports: [MatButtonModule, MazeComponent, MatIconModule, MatInputModule, FormsModule],
 })
