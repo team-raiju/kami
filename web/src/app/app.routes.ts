@@ -1,5 +1,6 @@
 import { Routes } from "@angular/router";
 import { HomePage, RaijinPage, TrackPage } from "./pages";
+import { FujinConfigPage } from "./pages/fujin-config/fujin-config.page";
 
 export const routes: Routes = [
   {
@@ -18,6 +19,12 @@ export const routes: Routes = [
     title: "Raijin",
     loadComponent: () => RaijinPage,
     path: "projects/raijin",
+    pathMatch: "full",
+  },
+  {
+    title: "Fujin Config",
+    loadComponent: () => FujinConfigPage,
+    path: "maze",
     pathMatch: "full",
   },
 ];

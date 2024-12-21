@@ -1,0 +1,129 @@
+@if (!isAllowed()) {
+  <div>Can't find BT!!</div>
+}
+
+<button mat-button (click)="connect()" [disabled]="!isAllowed()">Connect</button>
+
+<div class="flex flex-col md:flex-row px-2">
+  <div class="flex flex-col">
+    <maze />
+    <div class="mt-2 flex flex-row justify-center">
+      <button mat-icon-button (click)="send_command('stop')"><mat-icon>stop</mat-icon></button>
+      <button mat-button (click)="send_command('b1Short')">b1s</button>
+      <button mat-button (click)="send_command('b1Long')">b1l</button>
+      <button mat-button (click)="send_command('b2Short')">b2s</button>
+      <button mat-button (click)="send_command('b2Long')">b2l</button>
+    </div>
+  </div>
+  <div class="md:pl-5 flex flex-row md:flex-col md:min-w-20">
+    <p>BAT: {{ bat() }}</p>
+    <p>S1: {{ s1() }}</p>
+    <p>S2: {{ s2() }}</p>
+    <p>S3: {{ s3() }}</p>
+    <p>S4: {{ s4() }}</p>
+  </div>
+  <div class="flex flex-row flex-wrap gap-2 pl-5">
+    <div>
+      <mat-form-field>
+        <mat-label>Angular KP</mat-label>
+        <input matInput type="number" [(ngModel)]="values['angular_kp']" />
+        <button mat-icon-button matSuffix (click)="send_param('angular_kp')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Angular KI</mat-label>
+        <input matInput type="number" [(ngModel)]="values['angular_ki']" />
+        <button mat-icon-button matSuffix (click)="send_param('angular_ki')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Angular KD</mat-label>
+        <input matInput type="number" [(ngModel)]="values['angular_kd']" />
+        <button mat-icon-button matSuffix (click)="send_param('angular_kd')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Wall KP</mat-label>
+        <input matInput type="number" [(ngModel)]="values['wall_kp']" />
+        <button mat-icon-button matSuffix (click)="send_param('wall_kp')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Wall KI</mat-label>
+        <input matInput type="number" [(ngModel)]="values['wall_ki']" />
+        <button mat-icon-button matSuffix (click)="send_param('wall_ki')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Wall KD</mat-label>
+        <input matInput type="number" [(ngModel)]="values['wall_kd']" />
+        <button mat-icon-button matSuffix (click)="send_param('wall_kd')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+
+    <div>
+      <mat-form-field>
+        <mat-label>Min Move Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['min_move_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('min_move_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Min Turn Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['min_turn_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('min_turn_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Fix Position Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['fix_position_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('fix_position_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Search Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['search_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('search_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Angular Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['angular_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('angular_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Run Speed</mat-label>
+        <input matInput type="number" [(ngModel)]="values['run_speed']" />
+        <button mat-icon-button matSuffix (click)="send_param('run_speed')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Linear Acceleration</mat-label>
+        <input matInput type="number" [(ngModel)]="values['linear_acceleration']" />
+        <button mat-icon-button matSuffix (click)="send_param('linear_acceleration')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+    <div>
+      <mat-form-field>
+        <mat-label>Angular Acceleration</mat-label>
+        <input matInput type="number" [(ngModel)]="values['angular_acceleration']" />
+        <button mat-icon-button matSuffix (click)="send_param('angular_acceleration')"><mat-icon>send</mat-icon></button>
+      </mat-form-field>
+    </div>
+  </div>
+</div>
+
+<!-- <div class="whitespace-pre-line fixed h-[400px] w-full overflow-auto bottom-0 bg-gray-500">{{ ctext() }}</div> -->

@@ -5,7 +5,6 @@ import { TranslocoPipe } from "@jsverse/transloco";
 export type NavData = (string | NavData)[];
 
 @Component({
-  standalone: true,
   selector: "inner-list",
   template: `
     <ol class="list-none pl-5">
@@ -52,7 +51,6 @@ export class InnerListComponent {
 }
 
 @Component({
-  standalone: true,
   selector: "article-nav",
   template: `
     <nav class="pl-0 border-l border-gray-100">

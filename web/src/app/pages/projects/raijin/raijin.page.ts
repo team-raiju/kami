@@ -14,7 +14,6 @@ import { fadeInOut } from "../../../utils/animations";
 import { SideNavTogglerComponent } from "../../../components/sidenav/sidenav-toggler.component";
 
 @Component({
-  standalone: true,
   templateUrl: "./raijin.page.html",
   imports: [
     LanguageSwitcherComponent,
