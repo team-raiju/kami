@@ -1,0 +1,11 @@
+<div class="h-full flex flex-col">
+  <ng-container *transloco="let t; prefix: 'serial'">
+    <mat-toolbar>
+      <side-nav-toggler />
+      <span class="ml-2">{{ t("title") }}</span>
+      <span class="flex-auto"></span>
+      <language-switcher />
+    </mat-toolbar>
+    <div class="flex-grow bg-black"></div>
+  </ng-container>
+</div>
