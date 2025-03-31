@@ -1,7 +1,7 @@
 import { Routes } from "@angular/router";
 import { HomePage, RaijinPage, TrackPage } from "./pages";
 import { FujinConfigPage } from "./pages/fujin-config/fujin-config.page";
-import { SerialPage } from "./pages/serial/serial.page";
+import { ToolsPage } from "./pages/tools/tools.page";
 
 export const routes: Routes = [
   {
@@ -29,9 +29,9 @@ export const routes: Routes = [
     pathMatch: "full",
   },
   {
-    title: "Serial",
-    loadComponent: () => SerialPage,
-    path: "serial",
+    title: "Tools",
+    loadComponent: () => ToolsPage,
+    path: "tools",
     pathMatch: "full",
   },
 ];

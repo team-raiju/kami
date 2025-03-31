@@ -34,7 +34,7 @@ export const sideNavOpened = signal(false);
           </a>
         </mat-list>
         <div class="mt-auto text-center text-gray-400 mb-4">
-          <div class="mb-1">Kami &copy; 2024 Team Raiju</div>
+          <div class="mb-1">Kami &copy; 2025 Team Raiju</div>
           <div>
             <a mat-icon-button href="https://github.com/team-raiju" target="_blank"><mat-icon svgIcon="github"></mat-icon></a>
           </div>

@@ -4,8 +4,8 @@
     "import_points": "Importar Pontos",
     "import_markers": "Importar Marcadores"
   },
-  "serial": {
-    "title": "Constroles via Serial"
+  "tools": {
+    "title": "Ferramentas"
   },
   "article": {
     "intro": "Introdução",

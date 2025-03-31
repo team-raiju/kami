@@ -4,8 +4,8 @@
     "import_points": "Import Points",
     "import_markers": "Import Markers"
   },
-  "serial": {
-    "title": "Serial Controls"
+  "tools": {
+    "title": "Tools"
   },
   "article": {
     "intro": "Introduction",
