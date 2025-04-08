@@ -16,6 +16,7 @@ interface LogEntry {
   pos_y: number;
   angle: number;
   dist: number;
+  line_offset: number;
 }
 
 interface Point {
@@ -122,8 +123,8 @@ export class SerialService {
     }
   }
 
-  private parse(raw: string) {
-    console.log(raw);
+  parse(raw: string) {
+    // console.log(raw);
 
     const [type, ...data] = raw.split(":");
 
@@ -138,10 +139,42 @@ export class SerialService {
         break;
       }
 
+      case "log": {
+        this.parse_log(data);
+        break;
+      }
+
       default: {
         // console.log(`SERIAL: ${type}`);
       }
     }
+  }
+
+  private parse_log(data: string[]) {
+    const idx = parseInt(data[0]);
+    const values = data[1].split(";").map((d) => parseFloat(d));
+
+    this.logData.update((l) => {
+      l[idx] = {
+        velocity_ms: values[0],
+        target_velocity_ms: values[1],
+
+        angular_speed_rad_s: values[2],
+        target_rad_s: values[3],
+
+        pwm_left: values[4],
+        pwm_right: values[5],
+
+        battery: values[6],
+
+        pos_x: values[7],
+        pos_y: values[8],
+        angle: values[9],
+        dist: values[10],
+        line_offset: values[11],
+      };
+      return [...l];
+    });
   }
 
   private parse_map(data: string[]) {
