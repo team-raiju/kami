@@ -42,7 +42,7 @@ export class ToolsPage {
       datasets: [
         {
           label: "Target Velocity",
-          data: log.map((l) => l.target_velocity_ms),
+          data: log.map((l) => (l ?? {}).target_velocity_ms),
           borderColor: "#dab36bCC",
           borderWidth: 2,
           fill: false,
@@ -50,7 +50,7 @@ export class ToolsPage {
         },
         {
           label: "Velocity",
-          data: log.map((l) => l.velocity_ms),
+          data: log.map((l) => (l ?? {}).velocity_ms),
           borderColor: "#00FFFF",
           borderWidth: 2,
           fill: false,
@@ -68,7 +68,7 @@ export class ToolsPage {
       datasets: [
         {
           label: "Target Angular Velocity",
-          data: log.map((l) => l.target_rad_s),
+          data: log.map((l) => (l ?? {}).target_rad_s),
           borderColor: "#dab36bcc",
           borderWidth: 2,
           fill: false,
@@ -76,7 +76,7 @@ export class ToolsPage {
         },
         {
           label: "Angular Velocity",
-          data: log.map((l) => l.angular_speed_rad_s),
+          data: log.map((l) => (l ?? {}).angular_speed_rad_s),
           borderColor: "#00FFFF",
           borderWidth: 2,
           fill: false,
@@ -94,7 +94,7 @@ export class ToolsPage {
       datasets: [
         {
           label: "PWM Left",
-          data: log.map((l) => l.pwm_left),
+          data: log.map((l) => (l ?? {}).pwm_left),
           borderColor: "#00FFFF",
           borderWidth: 2,
           fill: false,
@@ -102,7 +102,7 @@ export class ToolsPage {
         },
         {
           label: "PWM Right",
-          data: log.map((l) => l.pwm_right),
+          data: log.map((l) => (l ?? {}).pwm_right),
           borderColor: "#dab36b",
           borderWidth: 2,
           fill: false,
@@ -120,7 +120,7 @@ export class ToolsPage {
       datasets: [
         {
           label: "Battery",
-          data: log.map((l) => l.battery),
+          data: log.map((l) => (l ?? {}).battery),
           borderColor: "#00FFFF",
           borderWidth: 2,
           fill: false,
@@ -138,7 +138,7 @@ export class ToolsPage {
       datasets: [
         {
           label: "Line offset",
-          data: log.map((l) => l.line_offset),
+          data: log.map((l) => (l ?? {}).line_offset),
           borderColor: "#00FFFF",
           borderWidth: 2,
           fill: false,
