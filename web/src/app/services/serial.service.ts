@@ -124,7 +124,7 @@ export class SerialService {
   }
 
   parse(raw: string) {
-    // console.log(raw);
+    console.log(raw);
 
     const [type, ...data] = raw.split(":");
 
