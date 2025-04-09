@@ -58,6 +58,8 @@ export class SerialService {
   markersData = signal<Marker[]>([]);
   state = signal<string>("");
 
+  private rawLogData: LogEntry[] = [];
+
   constructor() {
     navigator.serial.addEventListener("connect", (e) => {
       console.log("CONNECTED!", e);
@@ -124,7 +126,7 @@ export class SerialService {
   }
 
   parse(raw: string) {
-    console.log(raw);
+    // console.log(raw);
 
     const [type, ...data] = raw.split(":");
 
@@ -136,6 +138,16 @@ export class SerialService {
 
       case "map": {
         this.parse_map(data);
+        break;
+      }
+
+      case "log_start": {
+        this.rawLogData.length = 0;
+        break;
+      }
+
+      case "log_end": {
+        this.logData.set([...this.rawLogData]);
         break;
       }
 
@@ -154,27 +166,26 @@ export class SerialService {
     const idx = parseInt(data[0]);
     const values = data[1].split(";").map((d) => parseFloat(d));
 
-    this.logData.update((l) => {
-      l[idx] = {
-        velocity_ms: values[0],
-        target_velocity_ms: values[1],
+    this.rawLogData[idx] = {
+      velocity_ms: values[0],
+      target_velocity_ms: values[1],
 
-        angular_speed_rad_s: values[2],
-        target_rad_s: values[3],
+      angular_speed_rad_s: values[2],
+      target_rad_s: values[3],
 
-        pwm_left: values[4],
-        pwm_right: values[5],
+      pwm_left: values[4],
+      pwm_right: values[5],
 
-        battery: values[6],
+      battery: values[6],
 
-        pos_x: values[7],
-        pos_y: values[8],
-        angle: values[9],
-        dist: values[10],
-        line_offset: values[11],
-      };
-      return [...l];
-    });
+      pos_x: values[7],
+      pos_y: values[8],
+      angle: values[9],
+      dist: values[10],
+      line_offset: values[11],
+    };
+
+    // console.log(idx, this.rawLogData.filter((l) => l).length);
   }
 
   private parse_map(data: string[]) {

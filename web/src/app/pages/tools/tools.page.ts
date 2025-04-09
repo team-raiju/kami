@@ -181,7 +181,7 @@ export class ToolsPage {
         },
         zoom: {
           wheel: {
-            enabled: true,
+            enabled: false,
           },
           drag: {
             enabled: true,
