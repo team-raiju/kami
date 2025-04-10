@@ -1,4 +1,4 @@
-import { Component, computed, ViewChild, ViewChildren } from "@angular/core";
+import { Component, computed, signal, ViewChild, ViewChildren } from "@angular/core";
 import { LanguageSwitcherComponent } from "../../components/language-switch.component";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { TranslocoDirective } from "@jsverse/transloco";
@@ -10,7 +10,8 @@ import { SerialConnectButton } from "../../components/serial-connect-button.comp
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { BaseChartDirective } from "ng2-charts";
-import { ChartData, ChartOptions } from "chart.js";
+import { ChartData, ChartOptions, Point } from "chart.js";
+import { min } from "rxjs";
 
 const sleep = (ms: number) => new Promise<void>((resolve) => setTimeout(() => resolve(), ms));
 
@@ -33,6 +34,9 @@ export class ToolsPage {
   constructor(public serial: SerialService) {}
 
   @ViewChildren(BaseChartDirective) charts?: BaseChartDirective[];
+
+  highlight_min = signal(0);
+  highlight_max = signal(0);
 
   chart1_data = computed<ChartData<"line">>(() => {
     const log = this.serial.logData();
@@ -174,9 +178,15 @@ export class ToolsPage {
             const scale = chart.getZoomedScaleBounds();
 
             for (const c of this.charts ?? []) {
+              if (c.chart === chart || c.type === "scatter") {
+                continue;
+              }
+
               c.chart?.zoomScale("x", scale["x"]!, "default");
-              c.update();
             }
+
+            this.highlight_min.set(scale["x"]?.min ?? 0);
+            this.highlight_max.set(scale["x"]?.max ?? 0);
           },
         },
         zoom: {
@@ -191,11 +201,14 @@ export class ToolsPage {
             const scale = chart.getZoomedScaleBounds();
 
             for (const c of this.charts ?? []) {
-              if (c.chart === chart) {
+              if (c.chart === chart || c.type === "scatter") {
                 continue;
               }
               c.chart?.zoomScale("x", scale["x"]!, "default");
             }
+
+            this.highlight_min.set(scale["x"]?.min ?? 0);
+            this.highlight_max.set(scale["x"]?.max ?? 0);
           },
         },
       },
@@ -213,6 +226,45 @@ export class ToolsPage {
     },
   }));
 
+  track_data = computed<ChartData<"scatter", Point[]>["datasets"]>(() => {
+    const log = this.serial.logData();
+    const points = log.map((l) => ({
+      x: (l ?? {}).pos_x,
+      y: (l ?? {}).pos_y,
+    }));
+
+    const hmin = this.highlight_min();
+    const hmax = this.highlight_max();
+
+    const velocities = log.filter((l) => l).map((l) => l.velocity_ms);
+    const min_spd = 0.5;
+    const max_spd = Math.max(...velocities);
+
+    return [
+      {
+        label: "Track",
+        data: points,
+        backgroundColor: (p) => {
+          const speed = log[p.dataIndex]?.velocity_ms;
+          const perc = (speed - min_spd) / (max_spd - min_spd);
+          const h = (1.0 - perc) * 240;
+          const alpha = (p.dataIndex >= hmin && p.dataIndex <= hmax) || hmax === 0 ? "100%" : "10%";
+          return `hsla(${h}, 100%, 50%, ${alpha})`;
+        },
+        pointRadius: 2,
+      },
+    ];
+  });
+
+  track_options = computed<ChartOptions<"scatter">>(() => ({
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: {
+      tooltip: { enabled: false },
+    },
+    animation: false,
+  }));
+
   async readLog() {
     // const request = await fetch("/test.txt");
     // const data = await request.text();
@@ -225,5 +277,7 @@ export class ToolsPage {
     for (const c of this.charts ?? []) {
       c.chart?.resetZoom();
     }
+    this.highlight_min.set(0);
+    this.highlight_max.set(0);
   }
 }

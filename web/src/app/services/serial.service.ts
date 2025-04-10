@@ -147,7 +147,25 @@ export class SerialService {
       }
 
       case "log_end": {
-        this.logData.set([...this.rawLogData]);
+        this.logData.set(
+          this.rawLogData.filter((l) => {
+            return (
+              Math.abs(l.velocity_ms) <= 15 &&
+              Math.abs(l.target_velocity_ms) <= 15 &&
+              Math.abs(l.angular_speed_rad_s) <= 10000 &&
+              Math.abs(l.target_rad_s) <= 10000 &&
+              Math.abs(l.pwm_left) <= 10000 &&
+              Math.abs(l.pwm_right) <= 10000 &&
+              Math.abs(l.pos_x) <= 10000 &&
+              Math.abs(l.pos_y) <= 10000 &&
+              Math.abs(l.angle) <= 10000 &&
+              Math.abs(l.battery) <= 50000 &&
+              Math.abs(l.battery) > 1000 &&
+              Math.abs(l.line_offset) <= 10000 &&
+              Math.abs(l.dist) <= 65000
+            );
+          }),
+        );
         break;
       }
 
