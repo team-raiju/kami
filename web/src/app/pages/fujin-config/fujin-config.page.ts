@@ -1,9 +1,10 @@
-import { Component, signal, ViewChild, WritableSignal } from "@angular/core";
+import { Component, computed, signal, ViewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MazeComponent } from "./maze/maze.component";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { FormsModule } from "@angular/forms";
+import { BluetoothService } from "../../services/bt.service";
 
 @Component({
   templateUrl: "./fujin-config.page.html",
@@ -12,11 +13,8 @@ import { FormsModule } from "@angular/forms";
 export class FujinConfigPage {
   @ViewChild(MazeComponent, { static: true }) maze!: MazeComponent;
 
-  static service = "0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase();
-  static char = "0000FFE1-0000-1000-8000-00805F9B34FB".toLowerCase();
-
   ctext = signal("");
-  isAllowed = signal(false);
+  isAllowed = computed(() => this.bt.isAllowed());
 
   public bat = signal(0);
   public s1 = signal(0);
@@ -24,41 +22,17 @@ export class FujinConfigPage {
   public s3 = signal(0);
   public s4 = signal(0);
 
-  private char?: BluetoothRemoteGATTCharacteristic;
-
-  constructor() {}
+  constructor(private bt: BluetoothService) {}
 
   async ngOnInit() {
-    const btPermission = await navigator.bluetooth.getAvailability();
-    this.isAllowed.set(btPermission);
+    await this.bt.init();
   }
 
   async connect() {
     try {
-      const device = await navigator.bluetooth.requestDevice({
-        // acceptAllDevices: true,
-        filters: [{ namePrefix: "JDY" }],
-        optionalServices: [FujinConfigPage.service],
-      });
-      this.log(device.name);
-
-      await device.gatt!.connect();
-      this.log("CONECTOU");
-
-      const service = await device.gatt!.getPrimaryService(FujinConfigPage.service);
-      this.log(service.uuid);
-
-      this.char = await service.getCharacteristic(FujinConfigPage.char);
-
-      this.char.addEventListener("characteristicvaluechanged", (ev: unknown) => {
-        const data = (ev as Event & { target: { value: DataView } }).target!.value;
-        this.parse(data);
-      });
-
-      await this.char.startNotifications();
+      await this.bt.connect((d) => this.parse(d));
     } catch (e) {
-      //@ts-ignore
-      this.log(e);
+      this.log(e as string);
     }
   }
 
@@ -132,7 +106,7 @@ export class FujinConfigPage {
 
     const toSend = new Uint8Array(buffer);
     console.log(toSend);
-    this.char?.writeValueWithoutResponse(toSend);
+    this.bt.send(toSend);
   }
 
   static readonly commands = {
@@ -152,7 +126,7 @@ export class FujinConfigPage {
 
     const toSend = new Uint8Array(buffer);
     console.log(toSend);
-    this.char?.writeValueWithoutResponse(toSend);
+    this.bt.send(toSend);
   }
 
   log(t?: string) {

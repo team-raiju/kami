@@ -4,6 +4,9 @@
     "import_points": "Import Points",
     "import_markers": "Import Markers"
   },
+  "tools": {
+    "title": "Tools"
+  },
   "article": {
     "intro": "Introduction",
     "mec": "Mechanics",

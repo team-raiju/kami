@@ -18,7 +18,7 @@
     "target": "ES2022",
     "module": "ES2022",
     "lib": ["ES2022", "dom"],
-    "types": ["@types/wicg-file-system-access", "@types/web-bluetooth"]
+    "types": ["@types/wicg-file-system-access", "@types/web-bluetooth", "@types/w3c-web-serial"]
   },
   "angularCompilerOptions": {
     "enableI18nLegacyMessageIdFormat": false,

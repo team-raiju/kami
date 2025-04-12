@@ -1,6 +1,7 @@
 import { Routes } from "@angular/router";
 import { HomePage, RaijinPage, TrackPage } from "./pages";
 import { FujinConfigPage } from "./pages/fujin-config/fujin-config.page";
+import { ToolsPage } from "./pages/tools/tools.page";
 
 export const routes: Routes = [
   {
@@ -25,6 +26,12 @@ export const routes: Routes = [
     title: "Fujin Config",
     loadComponent: () => FujinConfigPage,
     path: "maze",
+    pathMatch: "full",
+  },
+  {
+    title: "Tools",
+    loadComponent: () => ToolsPage,
+    path: "tools",
     pathMatch: "full",
   },
 ];
