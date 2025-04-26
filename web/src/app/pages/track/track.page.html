@@ -12,11 +12,12 @@
         <mat-icon>file_open</mat-icon>
         {{ t("import_markers") }}
       </button>
-      <language-switcher></language-switcher>
+      <serial-connect-button />
+      <language-switcher />
     </mat-toolbar>
     <div class="flex-grow bg-black">
       @if (hasPoints()) {
-      <track-editor></track-editor>
+        <track-editor />
       }
     </div>
   </ng-container>
