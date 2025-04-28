@@ -13,6 +13,9 @@
         {{ t("import_markers") }}
       </button>
       <serial-connect-button />
+      <button type="button" mat-icon-button [disabled]="serialService.selectedPort() === null" (click)="serialService.request_map()">
+        <mat-icon>download</mat-icon>
+      </button>
       <language-switcher />
     </mat-toolbar>
     <div class="flex-grow bg-black">

@@ -59,6 +59,7 @@ export class SerialService {
   state = signal<string>("");
 
   private rawLogData: LogEntry[] = [];
+  private rawTrackData: Point[] = [];
 
   constructor() {
     navigator.serial.addEventListener("connect", (e) => {
@@ -126,8 +127,6 @@ export class SerialService {
   }
 
   parse(raw: string) {
-    // console.log(raw);
-
     const [type, ...data] = raw.split(":");
 
     switch (type) {
@@ -136,13 +135,28 @@ export class SerialService {
         break;
       }
 
-      case "map": {
-        this.parse_map(data);
+      case "track_start": {
+        this.rawTrackData.length = 0;
+        break;
+      }
+
+      case "track": {
+        this.parse_track(data);
+        break;
+      }
+
+      case "track_end": {
+        this.trackData.set([...this.rawTrackData]);
         break;
       }
 
       case "log_start": {
         this.rawLogData.length = 0;
+        break;
+      }
+
+      case "log": {
+        this.parse_log(data);
         break;
       }
 
@@ -166,11 +180,6 @@ export class SerialService {
             );
           }),
         );
-        break;
-      }
-
-      case "log": {
-        this.parse_log(data);
         break;
       }
 
@@ -206,46 +215,12 @@ export class SerialService {
     // console.log(idx, this.rawLogData.filter((l) => l).length);
   }
 
-  private parse_map(data: string[]) {
-    const [type, _idx, value] = data;
+  private parse_track(data: string[]) {
+    const [_idx, value] = data;
     const idx = parseInt(_idx);
 
-    switch (type) {
-      case "t": {
-        const [x, y] = value.split(",").map((s) => parseInt(s));
-        this.trackData.update((t) => {
-          t[idx] = { x, y };
-          return t;
-        });
-        break;
-      }
+    const [x, y] = value.split(",").map((s) => parseInt(s));
 
-      case "s": {
-        const [x, y] = value.split(",").map((s) => parseInt(s));
-        this.shortcutData.update((t) => {
-          t[idx] = { x, y };
-          return t;
-        });
-        break;
-      }
-
-      case "m": {
-        const [x, y, dist] = value.split(",").map((s) => parseInt(s));
-        this.markersData.update((t) => {
-          t[idx] = { pos: { x, y }, dist };
-          return t;
-        });
-        break;
-      }
-
-      case "r": {
-        const r = parseInt(value);
-        this.radiusData.update((t) => {
-          t[idx] = r;
-          return t;
-        });
-        break;
-      }
-    }
+    this.rawTrackData[idx] = { x, y };
   }
 }

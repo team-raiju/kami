@@ -29,7 +29,7 @@ export class TrackPage {
 
   constructor(
     private trackService: TrackService,
-    private serialService: SerialService,
+    public serialService: SerialService,
   ) {}
 
   async importPoints(markers = false) {
