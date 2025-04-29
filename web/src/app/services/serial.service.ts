@@ -219,7 +219,7 @@ export class SerialService {
     const [_idx, value] = data;
     const idx = parseInt(_idx);
 
-    const [x, y] = value.split(",").map((s) => parseInt(s));
+    const [x, y] = value.split(",").map((s) => parseFloat(parseFloat(s).toFixed(2)));
 
     this.rawTrackData[idx] = { x, y };
   }
