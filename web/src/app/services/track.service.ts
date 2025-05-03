@@ -1,4 +1,5 @@
-import { Injectable, signal } from "@angular/core";
+import { Injectable, linkedSignal } from "@angular/core";
+import { SerialService } from "./serial.service";
 
 export interface Point {
   x: number;
@@ -7,8 +8,10 @@ export interface Point {
 
 @Injectable({ providedIn: "root" })
 export class TrackService {
-  track = signal<Point[]>([]);
-  markers = signal<Point[]>([]);
+  track = linkedSignal<Point[]>(() => this.serialService.trackData());
+  markers = linkedSignal<Point[]>(() => this.serialService.markersData().map((m) => m.pos));
+
+  constructor(private serialService: SerialService) {}
 
   deCasteljau = (points: Point[], position = 0.5) => {
     let a: Point | undefined;

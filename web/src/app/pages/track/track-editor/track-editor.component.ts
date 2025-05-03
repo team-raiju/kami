@@ -15,18 +15,6 @@ export class TrackEditorComponent {
 
   width = signal(500);
 
-  limits = computed<[number, number, number, number]>(() => {
-    const xs = this.trackService.track().map((p) => p.x);
-    const ys = this.trackService.track().map((p) => p.y);
-
-    const [minx, maxx] = [Math.min(...xs), Math.max(...xs)];
-    const [miny, maxy] = [Math.min(...ys), Math.max(...ys)];
-
-    const bb = Math.max(maxx - minx, maxy - miny) + 10;
-
-    return [minx - 5, minx + bb, miny - 5, miny + bb];
-  });
-
   data = computed<ChartData<"scatter", Point[]>["datasets"]>(() => {
     const points = this.trackService.track();
     const markers = this.trackService.markers();
@@ -60,23 +48,33 @@ export class TrackEditorComponent {
     maintainAspectRatio: false,
     scales: {
       x: {
-        min: this.limits()[0],
-        max: this.limits()[1],
         grid: {
           color: "#FFFFFF30",
         },
         ticks: {
-          stepSize: 10,
+          //@ts-ignore
+          count: (ctx) => {
+            const {
+              scale: { maxWidth },
+            } = ctx;
+
+            return maxWidth / 10;
+          },
         },
       },
       y: {
-        min: this.limits()[2],
-        max: this.limits()[3],
         grid: {
           color: "#FFFFFF30",
         },
         ticks: {
-          stepSize: 10,
+          //@ts-ignore
+          count: (ctx) => {
+            const {
+              scale: { maxHeight },
+            } = ctx;
+
+            return maxHeight / 10;
+          },
         },
       },
     },

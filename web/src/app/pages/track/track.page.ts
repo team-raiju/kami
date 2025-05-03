@@ -8,6 +8,8 @@ import { Point, TrackService } from "../../services/track.service";
 import { TrackEditorComponent } from "./track-editor/track-editor.component";
 import { LanguageSwitcherComponent } from "../../components/language-switch.component";
 import { SideNavTogglerComponent } from "../../components/sidenav/sidenav-toggler.component";
+import { SerialConnectButton } from "../../components/serial-connect-button.component";
+import { SerialService } from "../../services/serial.service";
 
 @Component({
   templateUrl: "./track.page.html",
@@ -19,12 +21,16 @@ import { SideNavTogglerComponent } from "../../components/sidenav/sidenav-toggle
     TranslocoDirective,
     LanguageSwitcherComponent,
     SideNavTogglerComponent,
+    SerialConnectButton,
   ],
 })
 export class TrackPage {
   hasPoints = computed(() => this.trackService.track().length > 0);
 
-  constructor(private trackService: TrackService) {}
+  constructor(
+    private trackService: TrackService,
+    public serialService: SerialService,
+  ) {}
 
   async importPoints(markers = false) {
     const [handle] = await window.showOpenFilePicker();
