@@ -1,12 +1,17 @@
 <script lang="ts">
   import { BluetoothService } from "$lib";
+  import { Tabs } from "bits-ui";
+
+  const tabs = ["raiju", "raijin", "fujin"];
 </script>
 
-<div class="mx-auto min-h-screen max-w-md rounded-3xl bg-gray-100 p-4 shadow-lg">
-  <header class="mb-6 flex flex-row">
-    <h1 class="text-4xl font-extrabold text-gray-900">Kami</h1>
-    <div class="ml-auto"></div>
-  </header>
-
-  <div class="mb-6 flex items-center gap-2"></div>
-</div>
+<Tabs.Root class="h-full w-full" value="raiju">
+  <Tabs.Content value="raiju">raiju</Tabs.Content>
+  <Tabs.Content value="raijin">raijin</Tabs.Content>
+  <Tabs.Content value="fujin">fujin</Tabs.Content>
+  <Tabs.List class="z-90 flex w-full flex-row justify-around">
+    {#each tabs as tab}
+      <Tabs.Trigger value={tab}>{tab}</Tabs.Trigger>
+    {/each}
+  </Tabs.List>
+</Tabs.Root>
