@@ -1,4 +1,4 @@
-export class BluetoothService {
+class BluetoothService {
   static service = "0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase();
   static char = "0000FFE1-0000-1000-8000-00805F9B34FB".toLowerCase();
 
@@ -59,3 +59,5 @@ export class BluetoothService {
     this.char?.writeValueWithoutResponse(data);
   }
 }
+
+export const bluetoothService = new BluetoothService();
