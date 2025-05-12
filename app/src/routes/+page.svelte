@@ -1,29 +1,40 @@
 <script lang="ts">
-  import { bluetoothService } from "$lib";
+  import { bluetoothService } from "$lib/bt.svelte";
   import { Tabs, Button } from "bits-ui";
   import { Bluetooth } from "phosphor-svelte";
-  import Raiju from "../tabs/raiju.svelte";
+  import Raiju from "../lib/components/tabs/raiju.svelte";
+  import Raijin from "../lib/components/tabs/raijin.svelte";
+  import { logDebug, logError, logInfo, logWarn } from "$lib/log.svelte";
+  import LogToggler from "$lib/components/log-toggler.svelte";
 
-  let selected = $state("raiju");
+  let selected: (typeof tabs)[number] = $state("raijin");
 
-  const tabs = ["raiju", "raijin", "fujin"] as const;
+  const tabs = ["raijin", "raiju", "fujin"] as const;
   const titles = {
     raiju: "Raiju",
     raijin: "Raijin",
     fujin: "Fujin",
-  } as Record<string, string>;
+  };
+
+  logDebug("aaaaaaddf");
+  logInfo("aaaaaaddf");
+  logWarn("aaaaaaddf");
+  logError("aaaaaaddf");
 </script>
 
 <Tabs.Root bind:value={selected} class="h-full w-full overflow-auto pb-20">
-  <div class="flex h-12 flex-row bg-violet-950 px-4 text-xl font-bold text-white">
-    <div class="">{titles[selected]}</div>
+  <div class="flex h-12 flex-row items-center gap-2 bg-violet-950 px-4 text-xl font-bold text-white">
+    <div>{titles[selected]}</div>
     <Button.Root class="ml-auto" onclick={() => bluetoothService.connect((d) => console.log(d))}><Bluetooth /></Button.Root>
+    <LogToggler />
   </div>
   <div>
     <Tabs.Content value="raiju">
       <Raiju></Raiju>
     </Tabs.Content>
-    <Tabs.Content value="raijin"></Tabs.Content>
+    <Tabs.Content value="raijin">
+      <Raijin></Raijin>
+    </Tabs.Content>
     <Tabs.Content value="fujin"></Tabs.Content>
   </div>
 

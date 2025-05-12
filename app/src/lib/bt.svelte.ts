@@ -1,3 +1,9 @@
+import { logDebug } from "./log.svelte";
+
+enum Headers {
+  raijin = 0xff,
+}
+
 class BluetoothService {
   static service = "0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase();
   static char = "0000FFE1-0000-1000-8000-00805F9B34FB".toLowerCase();
@@ -25,20 +31,20 @@ class BluetoothService {
         filters: [{ namePrefix: "JDY" }],
         optionalServices: [BluetoothService.service],
       });
-      console.log(device.name);
+      logDebug(device.name);
 
       await device.gatt!.connect();
-      console.log("CONECTOU");
+      logDebug("CONECTOU");
       this.isConnected = true;
 
       device.addEventListener("gattserverdisconnected", () => {
-        console.log("Lost BT connection");
+        logDebug("Lost BT connection");
         this.isConnected = false;
         this.char = undefined;
       });
 
       const service = await device.gatt!.getPrimaryService(BluetoothService.service);
-      console.log(service.uuid);
+      logDebug(service.uuid);
 
       this.char = await service.getCharacteristic(BluetoothService.char);
 
