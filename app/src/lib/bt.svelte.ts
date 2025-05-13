@@ -1,8 +1,5 @@
+import * as Raijin from "./config/raijin.svelte";
 import { logDebug } from "./log.svelte";
-
-enum Headers {
-  raijin = 0xff,
-}
 
 class BluetoothService {
   static service = "0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase();
@@ -20,7 +17,7 @@ class BluetoothService {
     this.isAllowed = btPermission;
   }
 
-  async connect(parser: (d: DataView) => void) {
+  async connect() {
     if (this.char != null) {
       return;
     }
@@ -28,7 +25,7 @@ class BluetoothService {
     try {
       const device = await navigator.bluetooth.requestDevice({
         // acceptAllDevices: true,
-        filters: [{ namePrefix: "JDY" }],
+        filters: [],
         optionalServices: [BluetoothService.service],
       });
       logDebug(device.name);
@@ -50,7 +47,9 @@ class BluetoothService {
 
       this.char.addEventListener("characteristicvaluechanged", (ev: unknown) => {
         const data = (ev as Event & { target: { value: DataView } }).target!.value;
-        parser(data);
+        if (data.getUint8(0) === Raijin.HEADER) {
+          Raijin.parsePacket(data);
+        }
       });
 
       await this.char.startNotifications();
