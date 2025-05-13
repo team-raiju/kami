@@ -46,6 +46,7 @@
 	"dependencies": {
 		"bits-ui": "^1.4.4",
 		"phosphor-svelte": "^3.0.1",
+		"svelte-gestures": "^5.1.4",
 		"underscore": "^1.13.7"
 	}
 }

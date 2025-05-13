@@ -25,7 +25,7 @@ class BluetoothService {
     try {
       const device = await navigator.bluetooth.requestDevice({
         // acceptAllDevices: true,
-        filters: [],
+        filters: [{ namePrefix: "JDY" }],
         optionalServices: [BluetoothService.service],
       });
       logDebug(device.name);
