@@ -1,3 +1,5 @@
+import { newErrorState } from "./components/log-state.svelte";
+
 interface LogEntry {
   type: "debug" | "info" | "warn" | "error";
   text: string;
@@ -14,5 +16,11 @@ export function log(type: LogEntry["type"], text?: string) {
 
 export const logDebug = (text?: string) => DEBUG && log("debug", text);
 export const logInfo = (text?: string) => log("info", text);
-export const logWarn = (text?: string) => log("warn", text);
-export const logError = (text?: string) => log("error", text);
+export const logWarn = (text?: string) => {
+  newErrorState().setNewWarning();
+  log("warn", text);
+};
+export const logError = (text?: string) => {
+  newErrorState().setNewError();
+  log("error", text);
+};

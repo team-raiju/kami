@@ -1,7 +1,7 @@
 <script lang="ts">
   import { entries } from "$lib/log.svelte";
   import { Bug, Info, Warning } from "phosphor-svelte";
-  import { showLog } from "./show-log.svelte";
+  import { showLog } from "./log-state.svelte";
 </script>
 
 {#if showLog().showLog}

@@ -37,10 +37,22 @@ export function parsePacket(data: DataView) {
 }
 
 export function createCommandPacket(command: PacketCommand) {
-  return createPacket(PacketType.Command, [command]);
+  const buffer = new ArrayBuffer(20);
+  const view = new DataView(buffer);
+  view.setUint8(0, HEADER);
+  view.setUint8(1, PacketType.Command);
+  view.setUint8(2, command);
+
+  return new Uint8Array(buffer);
 }
 
-function createPacket(type: PacketType, data: number[]) {
-  const buffer = [HEADER, type, ...data];
+export function createUpdateParameterPacket(code: number, value: number) {
+  const buffer = new ArrayBuffer(20);
+  const view = new DataView(buffer);
+  view.setUint8(0, HEADER);
+  view.setUint8(1, PacketType.UpdateParameters);
+  view.setUint8(2, code);
+  view.setFloat32(3, value, true);
+
   return new Uint8Array(buffer);
 }

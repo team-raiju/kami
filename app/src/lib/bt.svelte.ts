@@ -1,5 +1,5 @@
 import * as Raijin from "./config/raijin.svelte";
-import { logDebug } from "./log.svelte";
+import { logDebug, logError, logWarn } from "./log.svelte";
 
 class BluetoothService {
   static service = "0000FFE0-0000-1000-8000-00805F9B34FB".toLowerCase();
@@ -13,8 +13,16 @@ class BluetoothService {
   constructor() {}
 
   async init() {
-    const btPermission = await navigator.bluetooth.getAvailability();
-    this.isAllowed = btPermission;
+    try {
+      const btPermission = await navigator.bluetooth.getAvailability();
+      this.isAllowed = btPermission;
+    } catch (e) {
+      logError(`Failed to check bluetooth availability: ${e}`);
+    }
+
+    if (!this.isAllowed) {
+      logError("Bluetooth is not available or enabled");
+    }
   }
 
   async connect() {
@@ -56,12 +64,22 @@ class BluetoothService {
     } catch (e) {
       this.isConnected = false;
       this.char = undefined;
+      logError(`Bluetooth connection failed: ${e}`);
       throw e;
     }
   }
 
-  public send(data: Uint8Array) {
-    this.char?.writeValueWithoutResponse(data);
+  public async send(data: Uint8Array) {
+    if (this.char == null) {
+      logWarn("Tried to send value without connection");
+      return;
+    }
+
+    try {
+      await this.char.writeValueWithoutResponse(data);
+    } catch {
+      logError("Failed to send value");
+    }
   }
 }
 
