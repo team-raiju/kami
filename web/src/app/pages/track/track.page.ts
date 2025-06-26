@@ -28,7 +28,7 @@ export class TrackPage {
   hasPoints = computed(() => this.trackService.track().length > 0);
 
   constructor(
-    private trackService: TrackService,
+    public trackService: TrackService,
     public serialService: SerialService,
   ) {}
 
@@ -46,6 +46,27 @@ export class TrackPage {
     };
 
     reader.readAsText(file);
+  }
+
+  async exportPoints() {
+    const handle = await window.showDirectoryPicker();
+    await handle.requestPermission({ mode: "readwrite" });
+    for (const [data, name] of [
+      [this.trackService.track(), "track"],
+      [this.trackService.shortcut(), "shortcut"],
+      [this.trackService.markers(), "markers"],
+    ]) {
+      if (data.length == 0) continue;
+      let fhandle = await handle.getFileHandle(name + ".txt", { create: true });
+      const writable = await fhandle.createWritable();
+      await writable.write(
+        this.trackService
+          .track()
+          .map((p, i) => `track:${i}:${p.x},${p.y}`)
+          .join("\r\n"),
+      );
+      await writable.close();
+    }
   }
 
   parseFile(content: string): Point[] {

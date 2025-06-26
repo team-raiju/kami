@@ -1,113 +1,89 @@
 import { Component, computed, ElementRef, HostListener, signal, ViewChild } from "@angular/core";
 
 import { TrackService } from "../../../services/track.service";
-import { BaseChartDirective } from "ng2-charts";
-import { ChartData, ChartOptions, Point } from "chart.js";
+import { CoreShapeComponent, NgKonvaEventObject, StageComponent } from "ng2-konva";
+import { StageConfig } from "konva/lib/Stage";
+import Konva from "konva";
+import { LineConfig } from "konva/lib/shapes/Line";
 
 @Component({
   selector: "track-editor",
   templateUrl: "./track-editor.component.html",
-  imports: [BaseChartDirective],
+  imports: [StageComponent, CoreShapeComponent],
 })
 export class TrackEditorComponent {
-  @ViewChild("container") chartContainer!: ElementRef;
-  @ViewChild("childContainer") childContainer!: ElementRef;
+  @ViewChild("container") container!: ElementRef;
+  @ViewChild("stage") stage!: StageComponent;
+  @ViewChild("bgLayer") bgLayer!: CoreShapeComponent;
+  @ViewChild("dataLayer") dataLayer!: CoreShapeComponent;
 
   width = signal(0);
   height = signal(0);
 
-  limits = computed<[number, number, number, number]>(() => {
-    const xs = this.trackService.track().map((p) => p.x);
-    const ys = this.trackService.track().map((p) => p.y);
+  public hovering = signal(false);
+  public mouseX = signal(0);
+  public mouseY = signal(0);
+  public stageOffsetX = signal(0);
+  public stageOffsetY = signal(0);
 
-    const [minx, maxx] = [Math.min(...xs), Math.max(...xs)];
-    const [miny, maxy] = [Math.min(...ys), Math.max(...ys)];
+  public stageConfig = computed<Partial<StageConfig>>(() => ({
+    draggable: true,
+    width: this.width(),
+    height: this.height(),
+  }));
 
-    const [dx, dy] = [maxx - minx, maxy - miny];
+  public verticalGuideConfig = computed<Partial<LineConfig>>(() => ({
+    points: [this.mouseX() - this.stageOffsetX(), -this.stageOffsetY(), this.mouseX() - this.stageOffsetX(), this.height() - this.stageOffsetY()],
+    visible: this.hovering(),
+    strokeWidth: 1,
+    opacity: 0.5,
+    stroke: "#FFFFFF",
+  }));
 
-    const ratio = this.width() / this.height();
-    const track_ratio = dx / dy;
-
-    if (track_ratio < ratio) {
-      const dX = (this.width() * dy) / this.height();
-      const maxg = minx + dX + 5;
-      const md = (maxg - maxx) / 2;
-
-      return [minx - 5 - md, maxg - md, miny - 5, maxy + 5];
-    }
-
-    const dY = (this.height() * dx) / this.width();
-    const maxg = miny + dY + 5;
-    const md = (maxg - maxy) / 2;
-
-    return [minx - 5, maxx + 5, miny - 5 - md, maxg - md];
-  });
-
-  data = computed<ChartData<"scatter", Point[]>["datasets"]>(() => {
-    const points = this.trackService.track();
-    const markers = this.trackService.markers();
-
-    return [
-      {
-        label: "Points",
-        data: points,
-        backgroundColor: "#00FFFFCC",
-        pointRadius: 2,
-      },
-      {
-        label: "Markers",
-        data: markers,
-        backgroundColor: "red",
-        // pointStyle: "rect",
-        pointRadius: 2.2,
-      },
-    ];
-  });
-
-  options = computed<ChartOptions<"scatter">>(() => ({
-    aspectRatio: 1,
-    animation: {
-      duration: 0,
-    },
-    plugins: {
-      tooltip: { enabled: false },
-    },
-    responsive: true,
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        min: this.limits()[0],
-        max: this.limits()[1],
-        grid: {
-          color: "#FFFFFF30",
-        },
-        ticks: {
-          stepSize: 15,
-        },
-      },
-      y: {
-        min: this.limits()[2],
-        max: this.limits()[3],
-        grid: {
-          color: "#FFFFFF30",
-        },
-        ticks: {
-          stepSize: 15,
-        },
-      },
-    },
+  public horizontalGuideConfig = computed<Partial<LineConfig>>(() => ({
+    points: [-this.stageOffsetX(), this.mouseY() - this.stageOffsetY(), this.width() - this.stageOffsetX(), this.mouseY() - this.stageOffsetY()],
+    visible: this.hovering(),
+    strokeWidth: 1,
+    opacity: 0.5,
+    stroke: "#FFFFFF",
   }));
 
   constructor(private trackService: TrackService) {}
 
+  resetGrid() {
+    this.stage.getStage().to({
+      x: 0,
+      y: 0,
+      duration: 0.5,
+      easing: Konva.Easings.EaseInOut,
+    });
+
+    this.stageOffsetX.set(0);
+    this.stageOffsetY.set(0);
+  }
+
+  updateSelector() {
+    const { x, y } = this.stage.getStage().getPointerPosition()!;
+    this.mouseX.set(x);
+    this.mouseY.set(y);
+  }
+
+  updateStageOffset() {
+    const { x, y } = this.stage.getStage().getPosition();
+    this.stageOffsetX.set(x);
+    this.stageOffsetY.set(y);
+  }
+
   ngAfterViewInit() {
-    this.width.set(this.childContainer.nativeElement.offsetWidth);
-    this.height.set(this.childContainer.nativeElement.offsetHeight);
+    this.width.set(this.container.nativeElement.offsetWidth);
+    this.height.set(this.container.nativeElement.offsetHeight);
   }
 
   @HostListener("window:resize")
   resize() {
-    this.width.set(this.childContainer.nativeElement.offsetWidth);
-    this.height.set(this.childContainer.nativeElement.offsetHeight);
+    this.width.set(this.container.nativeElement.offsetWidth);
+    this.height.set(this.container.nativeElement.offsetHeight);
   }
+
+  textConfig = computed(() => ({ text: `x: ${this.stageOffsetX()} y: ${this.stageOffsetY()}`, fill: "#FFFFFF" }));
 }

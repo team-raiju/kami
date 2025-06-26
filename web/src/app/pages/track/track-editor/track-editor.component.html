@@ -1,5 +1,22 @@
-<div #container class="w-full h-full flex flex-col items-center p-2">
-  <div #childContainer class="h-full w-full">
-    <canvas baseChart type="scatter" [datasets]="data()" [options]="options()"></canvas>
+<div class="w-full h-full flex flex-row">
+  <div class="h-full flex flex-col bg-slate-800 w-[300px] text-white p-2"><button (click)="resetGrid()">Reset</button></div>
+  <div #container class="w-full h-full">
+    <ko-stage
+      #stage
+      [config]="stageConfig()"
+      (mouseenter)="hovering.set(true)"
+      (mouseleave)="hovering.set(false)"
+      (mousemove)="updateSelector()"
+      (dragmove)="updateStageOffset()"
+    >
+      <ko-layer #bgLayer>
+        <ko-line [config]="verticalGuideConfig()"></ko-line>
+        <ko-line [config]="horizontalGuideConfig()"></ko-line>
+      </ko-layer>
+      <ko-layer #dataLayer>
+        <ko-text [config]="textConfig()"></ko-text>
+        <ko-star [config]="{ x: 100, y: 100, numPoints: 5, innerRadius: 30, outerRadius: 50, fill: '#89b717', opacity: 0.8 }"></ko-star>
+      </ko-layer>
+    </ko-stage>
   </div>
 </div>

@@ -107,10 +107,10 @@ export class SerialService {
     this.selectedPort.set(null);
   }
 
-  async request_map() {
+  async requestMap() {
     const port = this.selectedPort();
 
-    console.log("Writing", port);
+    console.log("Writing");
     if (!port || !port.writable) {
       return;
     }
@@ -119,6 +119,7 @@ export class SerialService {
 
     try {
       await writer.write(new Uint8Array([this.header, this.commands.read_map]));
+      console.log("Wrote!");
     } catch (error) {
       console.log(error);
     } finally {
@@ -136,6 +137,7 @@ export class SerialService {
       }
 
       case "track_start": {
+        console.log("Track Start");
         this.rawTrackData.length = 0;
         break;
       }
@@ -146,7 +148,23 @@ export class SerialService {
       }
 
       case "track_end": {
+        console.log("Track End");
         this.trackData.set([...this.rawTrackData]);
+        break;
+      }
+
+      case "shortcut_start": {
+        this.rawTrackData.length = 0;
+        break;
+      }
+
+      case "shortcut": {
+        this.parse_track(data);
+        break;
+      }
+
+      case "shortcut_end": {
+        this.shortcutData.set([...this.rawTrackData]);
         break;
       }
 

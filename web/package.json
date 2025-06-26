@@ -31,6 +31,7 @@
     "marked": "^15.0.8",
     "mermaid": "^11.6.0",
     "ng2-charts": "^8.0.0",
+    "ng2-konva": "^9.0.0",
     "ng2-pdfjs-viewer": "^19.0.0",
     "ngx-markdown": "^19.1.1",
     "ngxtension": "^5.0.0",
