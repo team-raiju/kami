@@ -141,7 +141,7 @@
     ontap={onTap}
     use:press={() => ({ timeframe: 400 })}
     onpress={onPress}
-    class={`flex h-10 cursor-pointer flex-row items-center gap-1 rounded-md p-2 text-sm font-bold text-white !select-none active:scale-[0.98] active:transition-all ${color}`}
+    class={`flex h-10 cursor-pointer !select-none flex-row items-center gap-1 rounded-md p-2 text-sm font-bold text-white active:scale-[0.98] active:transition-all ${color}`}
   >
     <Icon weight="fill" />
     <span> {title} </span>
@@ -150,7 +150,7 @@
 
 {#snippet ParamInput(id: keyof typeof parameters)}
   {@const param = parameters[id]}
-  <Label.Root id={id + "-label"} for={id} class="text-sm leading-none font-medium peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
+  <Label.Root id={id + "-label"} for={id} class="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">
     {param.label}
   </Label.Root>
   <div class="mb-3 flex h-8 w-full flex-row items-center gap-2">
@@ -166,7 +166,7 @@
   </div>
 {/snippet}
 
-<div class="flex min-h-full flex-col gap-5 px-5 pt-3 select-none">
+<div class="flex min-h-full select-none flex-col gap-5 px-5 pt-3">
   <div class="flex flex-row items-center justify-around">
     <div class="flex w-[60%] flex-col gap-2 text-sm text-gray-800">
       <div class="flex items-center justify-between text-sm font-medium">
@@ -207,7 +207,7 @@
       <Accordion.Item value={group.name} class="border-dark-10 group border-b px-1.5">
         <Accordion.Header>
           <Accordion.Trigger
-            class="flex w-full flex-1 items-center justify-between py-5 text-[15px] font-medium transition-all select-none [&[data-state=open]>span>svg]:rotate-180"
+            class="flex w-full flex-1 select-none items-center justify-between py-5 text-[15px] font-medium transition-all [&[data-state=open]>span>svg]:rotate-180"
           >
             <span class="w-full text-left">
               {group.name}
