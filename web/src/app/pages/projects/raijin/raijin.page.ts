@@ -5,32 +5,30 @@ import { MatToolbarModule } from "@angular/material/toolbar";
 import { PdfJsViewerModule } from "ng2-pdfjs-viewer";
 
 import { LanguageSwitcherComponent } from "../../../components/language-switch.component";
-import { Raijin3DComponent } from "../../../components/raijin-3d.component";
+import { Bot3DComponent } from "../../../components/bot-3d.component";
 import { ArticleSectionsComponent } from "../../../components/articles/article-sections.component";
 import { ArticleNavComponent } from "../../../components/articles/article-nav.component";
 import { TranslocoService } from "@jsverse/transloco";
 import { toSignal } from "@angular/core/rxjs-interop";
 import { fadeInOut } from "../../../utils/animations";
-import { SideNavTogglerComponent } from "../../../components/sidenav/sidenav-toggler.component";
 
 @Component({
   templateUrl: "./raijin.page.html",
   imports: [
     LanguageSwitcherComponent,
-    Raijin3DComponent,
+    Bot3DComponent,
     ArticleSectionsComponent,
     ArticleNavComponent,
     MatIconModule,
     MatToolbarModule,
     MatButtonModule,
     PdfJsViewerModule,
-    SideNavTogglerComponent,
   ],
   animations: [fadeInOut()],
 })
 export class RaijinPage {
   @ViewChild("canvas", { static: true })
-  public canvas!: Raijin3DComponent;
+  public canvas!: Bot3DComponent;
 
   @ViewChild("navigation")
   public navigation!: ArticleNavComponent;

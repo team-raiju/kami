@@ -1,7 +1,5 @@
 import { Routes } from "@angular/router";
-import { HomePage, RaijinPage, TrackPage } from "./pages";
-import { FujinConfigPage } from "./pages/fujin-config/fujin-config.page";
-import { ToolsPage } from "./pages/tools/tools.page";
+import { HomePage, RaijinPage } from "./pages";
 
 export const routes: Routes = [
   {
@@ -11,27 +9,26 @@ export const routes: Routes = [
     pathMatch: "full",
   },
   {
-    title: "Track Builder",
-    loadComponent: () => TrackPage,
-    path: "track",
+    title: "Raijin Legacy",
+    loadComponent: () => RaijinPage,
+    path: "raijin/v1",
     pathMatch: "full",
   },
   {
     title: "Raijin",
     loadComponent: () => RaijinPage,
-    path: "projects/raijin",
+    path: "raijin/v2",
     pathMatch: "full",
   },
   {
-    title: "Fujin Config",
-    loadComponent: () => FujinConfigPage,
-    path: "maze",
+    path: "raijin",
     pathMatch: "full",
+    redirectTo: "raijin/v1",
   },
   {
-    title: "Tools",
-    loadComponent: () => ToolsPage,
-    path: "tools",
+    title: "Fujin",
+    loadComponent: () => RaijinPage,
+    path: "fujin",
     pathMatch: "full",
   },
 ];
