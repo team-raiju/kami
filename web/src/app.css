@@ -1,1 +1,56 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
+@import "katex/dist/katex.min.css";
+@import "highlight.js/styles/atom-one-dark.css";
+
+body {
+    background-color: #050505;
+    color: #ffffff;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #262626;
+    border: 1px solid #050505;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #7c3aed;
+}
+
+::-webkit-scrollbar-corner {
+    background: #050505;
+}
+
+.article-section figure {
+    @apply mb-4 text-center text-sm italic;
+}
+
+.article-section figure img {
+    @apply m-auto;
+}
+
+@font-face {
+    font-family: "Amanojaku";
+    src: url("/fonts/amanojaku.otf") format("opentype");
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@theme {
+    --font-title: "Amanojaku", "Noto Sans JP", sans-serif;
+    --font-jp: "Noto Sans JP", sans-serif;
+    --font-mono: "JetBrains Mono", monospace;
+    --font-body: "Space Grotesk", sans-serif;
+}
