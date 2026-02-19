@@ -13,7 +13,7 @@
             <InstagramIcon />
         </a>
         <a
-            href="https://www.youtube.com/@raijuteam1004"
+            href="https://www.youtube.com/@raiju_team"
             target="_blank"
             rel="noreferrer"
             class="transition-colors hover:text-white"

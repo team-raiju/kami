@@ -234,7 +234,7 @@
             </div>
 
             <div
-                class="font-grotesk prose prose-lg max-w-none prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-p:text-white/70 prose-a:text-violet-400 hover:prose-a:text-violet-300"
+                class="font-grotesk prose prose-lg max-w-none prose-invert prose-headings:font-bold prose-headings:tracking-tight prose-p:text-white/70 prose-a:text-violet-400 hover:prose-a:text-violet-300 prose-code:before:content-none prose-code:after:content-none"
             >
                 {#each content as section}
                     <section id={section.id} class="article-section mb-24 scroll-mt-24">
