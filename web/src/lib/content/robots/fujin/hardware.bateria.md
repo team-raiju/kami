@@ -4,4 +4,4 @@ Agora a descarga acaba sendo um pouco de problema. Apesar do seu rating ser de 3
 
 A escolha de 3S, foi para a bateria não ser um limitante na evolução do robô. Teoricamente mais tensão = mais potência.
 
-Ja a desvantagme é tamanho e PCB que deve suportar essa tensão.
+Ja a desvantagem é tamanho e PCB que deve suportar essa tensão.

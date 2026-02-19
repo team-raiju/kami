@@ -3,7 +3,7 @@ Como dito anterioremente, precisamos garantir uma leitura estável dos sensores 
 Para isso, nossa estratégia foi:
 - Leitura por DMA para não atrapalhar o código principal
 - Cada leitura é uma média móvel de 20 leituras anteriores
-- Garantira um posicionamento fixo e constante de cada sensor
+- Garantir um posicionamento fixo e constante de cada sensor
 - Uma proteção de impressão 3D para o emissor e receptor, a fim de evitar "vazamento" de luz para o sensor adjacente
 - Fazer a leitura recebida pelo receptor com o emissor desligado e depois com ele ligado, a fim de extrair o ruído do ambiente
 

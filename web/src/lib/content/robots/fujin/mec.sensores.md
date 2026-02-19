@@ -1,4 +1,5 @@
-Utilizamos 4 sensores dois apontando para a frente levemente inclinados para fora (~5°) e outros dois apontando para os lados (entre 30° e 40°).
+Utilizamos 4 sensores compostos por um par emissor-receptor IR ([ST-1KL3A](https://www.kodenshi.co.jp/top/wp-content/uploads/2022/03/ST-1KL3A.pdf) e 
+[SFH-4550](https://br.mouser.com/ProductDetail/ams-OSRAM/SFH-4550?qs=K5ta8V%252BWhtavCsf0k%2FOizw%3D%3D&gad_campaignid=22353288137)) dois apontando para a frente levemente inclinados para fora (~5°) e outros dois apontando para os lados (entre 30° e 40°).
 
 O posicionamento dos sensores tenta otimizar 3 coisas ao mesmo tempo:
 
