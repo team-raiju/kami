@@ -4,6 +4,7 @@
     import InstagramIcon from "$lib/components/icons/InstagramIcon.svelte";
     import { Canvas } from "@threlte/core";
     import Raijin from "$lib/components/Raijin.svelte";
+    import PdfViewer from "$lib/components/PDFViewer.svelte";
     import { marked } from "marked";
     import markedKatex from "marked-katex-extension";
     import mermaid from "mermaid";
@@ -101,7 +102,7 @@
 <div class="font-grotesk fixed inset-0 flex flex-col overflow-hidden bg-black text-white md:flex-row">
     <GridBackground />
 
-    <aside class="relative z-20 flex h-[40vh] w-full flex-col border-r border-white/10 bg-black/80 backdrop-blur-md md:h-full md:w-[30%]">
+    <aside class="relative z-10 flex h-[40vh] w-full flex-col border-r border-white/10 bg-black/80 backdrop-blur-md md:h-full md:w-[30%]">
         <div class="relative h-1/2 w-full overflow-hidden border-b border-white/10">
             <div class="absolute top-6 left-6 z-10">
                 <a
@@ -124,7 +125,7 @@
             </div>
 
             <div
-                class="[writing-mode:vertical-rl] pointer-events-none absolute top-1/2 right-4 z-0 -translate-y-1/2 font-jp text-8xl font-black text-white/5 select-none"
+                class="pointer-events-none absolute top-1/2 right-4 z-0 -translate-y-1/2 font-jp text-8xl font-black text-white/5 select-none [writing-mode:vertical-rl]"
             >
                 {botInfo.kanji}
             </div>
@@ -135,7 +136,7 @@
         </div>
 
         <nav class="flex-1 overflow-y-auto p-8">
-            <span class="mb-6 block font-mono text-xs tracking-widest text-white/30">DATA_INDEX // 目次</span>
+            <span class="mb-6 block font-mono text-xs tracking-widest text-white/30">OUTLINE // 目次</span>
             <ul class="space-y-6">
                 {#each content as section}
                     <li>
@@ -211,6 +212,10 @@
                         <div class="mb-8">
                             {@html section.html}
                         </div>
+
+                        {#if section.id === "hardware"}
+                            <PdfViewer url="/documents/Raijin_V1.pdf" />
+                        {/if}
 
                         {#each section.subsections as sub}
                             <div id={sub.id} class="scroll-mt-24">
