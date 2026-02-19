@@ -1,6 +1,7 @@
 <script lang="ts">
     import { T } from "@threlte/core";
     import { GLTF, useDraco, OrbitControls } from "@threlte/extras";
+    const { modelName } = $props();
 
     const dracoLoader = useDraco();
 </script>
@@ -12,4 +13,4 @@
 <T.AmbientLight />
 <T.PointLight position={[0, 8, 0]} />
 
-<GLTF url={"/models/raijin.v1.glb"} {dracoLoader} />
+<GLTF url={`/models/${modelName}.glb`} {dracoLoader} />

@@ -2,7 +2,7 @@
     import GridBackground from "$lib/components/GridBackground.svelte";
     import Footer from "$lib/components/Footer.svelte";
     import { Canvas } from "@threlte/core";
-    import Raijin from "$lib/components/Raijin.svelte";
+    import Robot from "$lib/components/Robot.svelte";
     import PdfViewer from "$lib/components/PDFViewer.svelte";
     import { marked } from "marked";
     import markedKatex from "marked-katex-extension";
@@ -188,7 +188,7 @@
             </div>
 
             <Canvas>
-                <Raijin />
+                <Robot modelName="fujin.v1" />
             </Canvas>
         </div>
 
