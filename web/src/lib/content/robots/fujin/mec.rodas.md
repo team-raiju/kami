@@ -1,0 +1,1 @@
+Rodas comerciais da Kyosho 20 shore. Um grande problema que tivemos com elas é seu desgaste. Esse desgaste acaba incluenciando depois o diâmetro da roda que é muito utilizado nas calibrações de movimentos do robô

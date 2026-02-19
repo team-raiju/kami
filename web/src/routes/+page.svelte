@@ -1,8 +1,7 @@
 <script lang="ts">
     import GridBackground from "$lib/components/GridBackground.svelte";
     import RobotCard from "$lib/components/RobotCard.svelte";
-    import GitHubIcon from "$lib/components/icons/GitHubIcon.svelte";
-    import InstagramIcon from "$lib/components/icons/InstagramIcon.svelte";
+    import Footer from "$lib/components/Footer.svelte";
 
     import logo from "$lib/assets/logo.svg?raw";
     import raiju from "$lib/assets/raiju.svg?raw";
@@ -38,7 +37,6 @@
             category: "Micromouse",
             medals: [1, 1, 0],
             versions: ["v1"],
-            disabled: true,
             debut: 2024,
             logo: fujin,
         },
@@ -64,7 +62,7 @@
         <div class="flex-col">
             <div class="mb-5 border-b border-white/10 font-body text-2xl">
                 <span class="cursor-default font-mono text-[12px] text-white/40 uppercase">
-                    Projects <span class="ml-2 font-jp text-white/20">企画</span>
+                    Projects <span class="ml-2 font-jp text-white/20">プロジェクト</span>
                 </span>
             </div>
             <div class="flex w-full flex-col gap-6 md:flex-row md:items-center md:justify-center md:perspective-[1000px]">
@@ -76,30 +74,6 @@
             </div>
         </div>
 
-        <div class="flex w-full items-end justify-between border-t border-white/10 pt-4 font-mono text-xs text-white/50">
-            <div class="flex gap-4">
-                <a
-                    href="https://github.com/team-raiju"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="transition-colors hover:text-white"
-                    aria-label="GitHub"
-                >
-                    <GitHubIcon />
-                </a>
-                <a
-                    href="https://instagram.com/raiju.team"
-                    target="_blank"
-                    rel="noreferrer"
-                    class="transition-colors hover:text-white"
-                    aria-label="Instagram"
-                >
-                    <InstagramIcon />
-                </a>
-            </div>
-            <div class="flex items-center gap-4">
-                <span>Team Raiju &copy; 2026</span>
-            </div>
-        </div>
+        <Footer />
     </div>
 </div>

@@ -1,0 +1,1 @@
+Medindo na fonte de tensão a ventoinha consome aproximademente 2A. Por garantia escolhemos o [IRLML6344TRPBF](https://www.infineon.com/assets/row/public/documents/24/49/infineon-irlml6344-datasheet-en.pdf?fileId=5546d462533600a4015356689c44262c) que é dimensionado para 5A contínuos em 25°C

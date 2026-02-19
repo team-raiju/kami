@@ -50,7 +50,7 @@
         <div class="mb-4 flex flex-row justify-between border-t border-dashed border-white/20 pt-4">
             <div class="flex flex-col">
                 <span class="font-mono text-[10px] text-white/40 uppercase">
-                    Debut <span class="ml-2 font-jp text-white/20">初陣</span>
+                    Debut <span class="ml-2 font-jp text-white/20">初出場</span>
                 </span>
                 <span class="font-mono text-sm text-white">{debut}</span>
             </div>
@@ -78,7 +78,7 @@
                     <span class="font-jp text-[10px] text-white/20">近日公開</span>
                 {:else}
                     <span class="font-mono text-xs tracking-widest text-white uppercase">Build Report</span>
-                    <span class="font-jp text-[10px] text-white/40">ビルドレポート</span>
+                    <span class="font-jp text-[10px] text-white/40">開発レポート</span>
                 {/if}
             </div>
             {#if !disabled}
@@ -103,7 +103,7 @@
                     {/if}
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
-                        class="h-4 w-4 transform text-current transition-transform group-hover/btn:translate-x-1"
+                        class="size-4 transform text-current transition-transform group-hover/btn:translate-x-1"
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"
