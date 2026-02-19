@@ -13,7 +13,7 @@
     class="group hover:border-opacity-100 relative flex w-full min-w-75 flex-col overflow-hidden border border-white/10 bg-black/40 p-6 backdrop-blur-sm transition-all duration-700 md:h-[55vh] md:w-1/3"
 >
     <div
-        class="[writing-mode:vertical-rl] pointer-events-none absolute top-20 right-4 z-0 font-jp text-9xl font-black text-white/5 opacity-0 transition-all duration-700 select-none group-hover:opacity-15"
+        class="pointer-events-none absolute top-20 right-4 z-0 font-jp text-9xl font-black text-white/5 opacity-0 transition-all duration-700 select-none [writing-mode:vertical-rl] group-hover:opacity-15"
     >
         {kanji}
     </div>
@@ -55,7 +55,7 @@
                 <span class="font-mono text-sm text-white">{debut}</span>
             </div>
 
-            <div class="flex max-w-20 flex-col">
+            <div class="flex max-w-25 flex-col">
                 <span class="font-mono text-[10px] text-white/40 uppercase">
                     Medals <span class="ml-2 font-jp text-white/20">メダル</span>
                 </span>

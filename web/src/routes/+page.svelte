@@ -45,7 +45,7 @@
     ];
 </script>
 
-<div class="relative h-screen w-full overflow-hidden bg-black font-body text-white">
+<div class="relative h-screen w-full bg-black font-body text-white">
     <GridBackground />
 
     <div class="relative z-10 mx-auto flex h-full w-full max-w-7xl flex-col justify-between px-6 py-8">
