@@ -9,7 +9,7 @@ O sistema consiste em um motor coreless 8523, ligado à uma ventoinha impressa e
 
 A fórmula geral para a downforce gerada é:
 
-$$ F = \Delta P *\cdot* A$$
+$$ F = \Delta P * A$$
 
 Onde $F$ é o downforce, $\Delta{P}$ é a diferença de pressão (vácuo) criada pela turbina, e $A$ é a área selada pela saia. Para maximizar o downforce $F$, temos três estratégias principais:
 
