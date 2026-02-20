@@ -3,24 +3,41 @@ O firmware é feito em C++ e é estruturado em máquina de estados. O código co
 Em alto nível, temos os seguintes estados:
 
 ```mermaid
+%%{init: {'theme':'dark'}}%%
 stateDiagram-v2
-    [*] --> Idle
-    Idle --> Calib
+    direction LR
 
-    Calib --> SensorsCalib
-    Calib --> IMUCalib
-    Calib --> FanCalib
-    Calib --> PreSearch
+    sIdle : Idle
+    sCalibrate : Calibrate
+    sPreSearch : Pre Search
+    sNormalSearch : Normal Search
+    sFullSearch : Full Search
+    sPreRun : Pre Run
+    sSelectSpeed : Select Speed
+    sSelectMode : Select Mode
+    sSelectMap : Select Map
+    sRun : Run
+    sIMUCalib : IMU Calib
+    sSensorsCalib : Sensors Calib
+    sFanCalib : Fan Calib
 
-    PreSearch --> NormalSearch
-    PreSearch --> FullSearch
-    PreSearch --> PreRun
+    [*] --> sIdle
+    sIdle --> sCalibrate
 
-    PreRun --> SelectSpeed
-    SelectSpeed --> SelectMode
-    SelectMode --> SelectMap
-    SelectMap --> Run
-    PreRun --> Idle
+    sCalibrate --> sSensorsCalib
+    sCalibrate --> sIMUCalib
+    sCalibrate --> sFanCalib
+    sCalibrate --> sPreSearch
+
+    sPreSearch --> sNormalSearch
+    sPreSearch --> sFullSearch
+    sPreSearch --> sPreRun
+
+    sPreRun --> sSelectSpeed
+    sSelectSpeed --> sSelectMode
+    sSelectMode --> sSelectMap
+    sSelectMap --> sRun
+    sPreRun --> sIdle
 ```
 
 - **Idle**: Estado inicial de standby, todos os sensores desativados para economizar bateria. Aceita comandos de USB e bluetooth para envio de configurações, e requests de logs e mapas armazenados no robô.
