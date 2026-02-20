@@ -38,4 +38,4 @@ SensingStatus ir_get_sensing_status() {
 }
 
 ```
-Para preencher a array `ir_wall_patterns`, utilizamos o modo de calibração descrito em [Visão Geral](#visão-geral) no modo "Sensors Calib"
+Para preencher a array `ir_wall_patterns`, utilizamos o modo de calibração descrito em [Visão Geral](#firmware) no modo "Sensors Calib"

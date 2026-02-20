@@ -42,7 +42,7 @@ O labirinto é um vetor de 16x16 dessas células. O robô vai preenchendo cada u
             (sensingStatus.front_seeing * N | sensingStatus.right_seeing * E | sensingStatus.left_seeing * W)
             << robot_dir;`
 3. Com base nessa nova informação, decide qual seu próximo movimento dentre 3 possíveis: "LEFT 90", "RIGHT 90", "TURN_AROUND" ou "FOWARD". Para essa decisão, roda o algoritmo de floodfill para ir em direção ao objetivo do labirinto
-4. Efetivamente realiza o movimento desejado. Para isso, entra o loop de controle, que controla a velocidade angular e linear para realizar o movimento desejado (por exemplo virar 90 graus). Todo movimento é calibrado para acabar bem no início da próxima célula. Mas detalhes sobre como o movimento é executado em [Movimentos](#movimentos)
+4. Efetivamente realiza o movimento desejado. Para isso, entra o loop de controle, que controla a velocidade angular e linear para realizar o movimento desejado (por exemplo virar 90 graus). Todo movimento é calibrado para acabar bem no início da próxima célula. Mas detalhes sobre como o movimento é executado em [Movimentos](#fw_mov_overview)
 5. Depois de terminar o movimento, atualiza a sua posição e a nova direção que está apontando.  Por exemplo se o movimento foi virar para a direita 90 graus, e antes estava apontando para o "NORTH" na posição (0,1), agora vai estar apontando para o "EAST" e estará na posição (1,1)
 6. Volta o algoritmo paa o item "2." e repete até a posição do robô ser igual a posição desejada
 

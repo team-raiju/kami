@@ -1,4 +1,4 @@
-Para um valor inicial para prencher cada parametro do "turn_params" e "foward_param" ([Movimentos - Estrutura de Dados](#movimentos---estrutura-de-dados)), temos um script auxiliar no repositório em `scripts/velocity_planner.py`.
+Para uma estimativa inicial para prencher cada parametro do "turn_params" e "foward_param" ([Movimentos - Estrutura de Dados](#fw_mov_dados)), temos um script auxiliar no repositório em `scripts/velocity_planner.py`.
 
 Esse script aceita como parâmetros de entrada os seguinte parâmetros:
 
@@ -50,7 +50,7 @@ O programa também faz um plot da trajetória e da velocidade angular ao longo d
     <figcaption>velocity_planner_2</figcaption>
 </figure>
 
-Um detalhe são os parâmetros `mm_before_turn`e `mm_after_turn`, eles significam o "quanto antes ou depois" do início da célula o movimento vai começar e o "quanto antes ou depois" ele vai terminar. Quando negativo indica que o movimento começa antes da célula e positivo depois. Isso é importante porque dependendo da velocidade não é possível fazer todo o movimento dentro de uma única célula e precisa começar um pouco antes ou um pouco depois.
+Um detalhe são os parâmetros `mm_before_turn` e `mm_after_turn`, eles significam o "quanto antes ou depois" do início da célula o movimento vai começar e o "quanto antes ou depois" ele vai terminar. Quando negativo indica que o movimento começa antes da célula e positivo depois. Isso é importante porque dependendo da velocidade não é possível fazer todo o movimento dentro de uma única célula e precisa começar um pouco antes ou um pouco depois.
 
 Esses valores depois também entram na estrutura de dados para o robô começar o movimento no momento certo.
 

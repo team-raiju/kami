@@ -4,6 +4,8 @@ Esses são os sensores mais utilizados de micromouse em todo mundo, a grande van
 
 Outra parte importante do circuito é que possuimos 4 pinos do microcontrolador para controlar individualmente cada um dos emissores através de um transistor. Isso serve para conseguir medir a quantidade de luz no receptor com os emissores ligados e depois desligados, a fim de diminuir a influência da luz do ambiente na medição. A medida final do sensor é:
 
-$$ Valor_{receptor} = Valor_{emissor_on} - Valor_{emissor_off} $$
+$$ 
+\text{Valor}_{\text{receptor}} = \text{Valor}_{\text{emissor\_on}} - \text{Valor}_{\text{emissor\_off}} 
+$$
 
 Além do que, fazemos a medida de cada sensor individualmente, para evitar interferências entre eles.

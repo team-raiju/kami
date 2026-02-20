@@ -8,9 +8,11 @@ Para obter máxima aderência, usamos sistema de sucção que aumenta a normal d
 O sistema consiste em um motor coreless 8523, ligado à uma ventoinha impressa em 3D e uma saia (_skirt_).
 
 A fórmula geral para a downforce gerada é:
-$$ F = \Delta P *A $$
+$$
+F = \Delta P \cdot A
+$$
 
-Onde $F$ é o downforce, $\Delta P$ é a diferença de pressão (vácuo) criada pela turbina, e $A$ é a área selada pela saia. Para maximizar o downforce $F$, temos três estratégias principais:
+Onde $F$ é o downforce, $\Delta{P}$ é a diferença de pressão (vácuo) criada pela turbina, e $A$ é a área selada pela saia. Para maximizar o downforce $F$, temos três estratégias principais:
 
 - **Aumentar a Rotação da Turbina** (Otimizando $\Delta P$):
 A diferença de pressão ($\Delta P$) não aumenta linearmente com a rotação da turbina, mas sim com o quadrado dela ($\Delta P \propto RPM^2$). Dobrar a velocidade da turbina irá, teoricamente, quadruplicar a pressão gerada e, consequentemente, quadruplicar o downforce. O problema é que a potência exigida do motor para cada aumento também aumenta considerávelmente, fazendo com que o motor esquente bastante.

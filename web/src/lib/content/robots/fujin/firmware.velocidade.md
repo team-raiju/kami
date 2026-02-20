@@ -1,4 +1,4 @@
-A mediçãod e velocidade linear é feita através dos encoders do robô. Essa medição acaba muitas vezes sendo ruidosa e deve ser feita com bastante cuidado para fornecer dados confiáveis.
+A medição de velocidade linear é feita através dos encoders do robô. Essa medição acaba muitas vezes sendo ruidosa e deve ser feita com bastante cuidado para fornecer dados confiáveis.
 
 No nosso caso, utilizamos interupções em GPIO para detectar os ticks do encoder. E vamos incrementando uma variável (left_encoder.ticks e right_encoder.ticks) a cada interrupção. Depois, separadamente, a cada 1ms, calculamos a velocidade com base no número de ticks que aconteceram desde a última medição:
 
