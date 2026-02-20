@@ -13,14 +13,14 @@ $$ F = \Delta P * A$$
 
 Onde $F$ é o downforce, $\Delta{P}$ é a diferença de pressão (vácuo) criada pela turbina, e $A$ é a área selada pela saia. Para maximizar o downforce $F$, temos três estratégias principais:
 
-- **Aumentar a Rotação da Turbina** (Otimizando $\Delta P$):
-A diferença de pressão ($\Delta P$) não aumenta linearmente com a rotação da turbina, mas sim com o quadrado dela ($\Delta P \propto RPM^2$). Dobrar a velocidade da turbina irá, teoricamente, quadruplicar a pressão gerada e, consequentemente, quadruplicar o downforce. O problema é que a potência exigida do motor para cada aumento também aumenta considerávelmente, fazendo com que o motor esquente bastante.
+- **Aumentar a Rotação da Turbina** Otimizando $\Delta{P}$:
+A diferença de pressão $\Delta{P}$ não aumenta linearmente com a rotação da turbina, mas sim com o quadrado dela $\Delta P \propto RPM^2$. Dobrar a velocidade da turbina irá, teoricamente, quadruplicar a pressão gerada e, consequentemente, quadruplicar o downforce. O problema é que a potência exigida do motor para cada aumento também aumenta considerávelmente, fazendo com que o motor esquente bastante.
 
-- **Maximizar a Área da Saia** (Otimizando $A$):
-A relação entre a área selada e o downforce é direta e linear. Se você conseguir duplicar a área da cavidade de baixa pressão (o tamanho da base delimitada pela saia), você irá duplicar o downforce gerado, mesmo que a pressão ($\Delta P$) se mantenha a mesma.
+- **Maximizar a Área da Saia** Otimizando $A$:
+A relação entre a área selada e o downforce é direta e linear. Se você conseguir duplicar a área da cavidade de baixa pressão (o tamanho da base delimitada pela saia), você irá duplicar o downforce gerado, mesmo que a pressão $\Delta{P}$ se mantenha a mesma.
 
 - **Garantir a Vedação Perfeita** (O Fator Crítico):
-Os dois pontos anteriores são inúteis se a cavidade não estiver bem vedada. O ideal é que a saia flexível toque o chão de forma contínua, impedindo que o ar externo (de alta pressão) vaze para dentro da zona de vácuo. Qualquer vazamento reduz o $\Delta P$ que a turbina consegue sustentar, "matando" a eficiência do sistema. Uma vedação perfeita é o que permite que a turbina gere e mantenha o vácuo máximo.
+Os dois pontos anteriores são inúteis se a cavidade não estiver bem vedada. O ideal é que a saia flexível toque o chão de forma contínua, impedindo que o ar externo (de alta pressão) vaze para dentro da zona de vácuo. Qualquer vazamento reduz o $\Delta{P}$ que a turbina consegue sustentar, "matando" a eficiência do sistema. Uma vedação perfeita é o que permite que a turbina gere e mantenha o vácuo máximo.
 
 Abaixo foto da nossa ventoinha que possui 29mm de diâmetro:
 

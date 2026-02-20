@@ -25,6 +25,7 @@ Alguns blogs:
 - [xfa273](https://xfa273-backofchirashi.hatenablog.com/entry/2024/05/04/153028)
 - [Green YE](http://greenye.net/)
 - [Koji Mouse](https://kojimousenote.blogspot.com/2024/)
+- [Mycro](https://mycro.gmariz.org/Mycro/Mycro)
 
 
 Repositórios úteis:
