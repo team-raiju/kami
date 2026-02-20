@@ -10,7 +10,7 @@
     <OrbitControls enableDamping minDistance={2} maxDistance={70} />
 </T.PerspectiveCamera>
 
-<T.AmbientLight />
-<T.PointLight position={[0, 8, 0]} />
+<T.AmbientLight color="#404040" intensity={5} />
+<T.PointLight position={[0, 8, 0]} intensity={75} />
 
 <GLTF url={`/models/${modelName}.glb`} {dracoLoader} />
