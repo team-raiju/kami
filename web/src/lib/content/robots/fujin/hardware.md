@@ -1,11 +1,11 @@
 <figure>
     <img src="/images/fujin/pcb-2.png" alt="pcb-2">
-    <figcaption>pcb-2</figcaption>
+    <figcaption>pcb</figcaption>
 </figure>
 
 <figure>
     <img src="/images/fujin/pcb-1.png" alt="pcb-1">
-    <figcaption>pcb-1</figcaption>
+    <figcaption>pcb</figcaption>
 </figure>
 
 | Label  | Descrição  | Link  |

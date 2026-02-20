@@ -1,6 +1,6 @@
 <figure>
     <img src="/images/fujin/fujin_photo_2.jpg" alt="fujin_photo_2">
-    <figcaption>fujin_photo_2</figcaption>
+    <figcaption>Fujin</figcaption>
 </figure>
 
 | Item  | Descrição  |

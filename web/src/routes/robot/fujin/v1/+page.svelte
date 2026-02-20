@@ -42,6 +42,9 @@
     import bluetoothMd from "$lib/content/robots/fujin/bluetooth.md?raw";
     import videosMd from "$lib/content/robots/fujin/videos.md?raw";
     import extrasMd from "$lib/content/robots/fujin/extras.md?raw";
+    import extrasReferenciasMd from "$lib/content/robots/fujin/extras.referencias.md?raw";
+    import extrasMazeBuildMd from "$lib/content/robots/fujin/extras.maze_build.md?raw";
+    import extrasSimulatorMd from "$lib/content/robots/fujin/extras.simulator.md?raw";
 
     const botInfo = {
         id: "fujin",
@@ -132,7 +135,11 @@
             id: "extras",
             title: "Extras",
             html: marked.parse(extrasMd),
-            subsections: [],
+            subsections: [
+                { id: "extras_referencias", title: "Referências e Links Úteis", html: marked.parse(extrasReferenciasMd) },
+                { id: "extras_maze_build", title: "Maze Build", html: marked.parse(extrasMazeBuildMd) },
+                { id: "extras_simulator", title: "Simulator", html: marked.parse(extrasSimulatorMd) },
+            ],
         },
     ];
 </script>
