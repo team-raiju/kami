@@ -4,7 +4,7 @@ O chassi para os motores, sistema de sucção e bateria é impresso em 3d
 
 <figure>
     <img src="/images/fujin/chassi.jpeg" alt="chassi">
-    <figcaption>chassi</figcaption>
+    <figcaption>Chassi</figcaption>
 </figure>
 
 Esse chassi tem um parafuso para segurar os motores e permitir ajustes.

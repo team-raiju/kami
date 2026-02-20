@@ -8,5 +8,5 @@ Abaixo uma foto com foco na PCB do encoder
 
 <figure>
     <img src="/images/fujin/encoders.png" alt="encoders">
-    <figcaption>encoders</figcaption>
+    <figcaption>Encoders</figcaption>
 </figure>

@@ -2,15 +2,14 @@ Para obter máxima aderência, usamos sistema de sucção que aumenta a normal d
 
 <figure>
     <img src="/images/fujin/succao.jpg" alt="succao">
-    <figcaption>succao</figcaption>
+    <figcaption>Succçao</figcaption>
 </figure>
 
 O sistema consiste em um motor coreless 8523, ligado à uma ventoinha impressa em 3D e uma saia (_skirt_).
 
 A fórmula geral para a downforce gerada é:
-$$
-F = \Delta P \cdot A
-$$
+
+$$ F = \Delta P *\cdot* A$$
 
 Onde $F$ é o downforce, $\Delta{P}$ é a diferença de pressão (vácuo) criada pela turbina, e $A$ é a área selada pela saia. Para maximizar o downforce $F$, temos três estratégias principais:
 
@@ -27,14 +26,14 @@ Abaixo foto da nossa ventoinha que possui 29mm de diâmetro:
 
 <figure>
     <img src="/images/fujin/ventoinha.jpeg" alt="ventoinha">
-    <figcaption>ventoinha</figcaption>
+    <figcaption>Ventoinha</figcaption>
 </figure>
 
 E aqui nossa "saia". É feita com um plástico relativamente flexível de saquinho plastíco, e é colado na PCB com fita dupla-face e depois selado por cima com fita-adesiva normal de empacotamento. A dureza do plástico deve ser testada empiricamente. A saia tem 1cm de largura em cada direção.
 
 <figure>
     <img src="/images/fujin/fujin_photo_3.jpg" alt="fujin_photo_3">
-    <figcaption>fujin_photo_3</figcaption>
+    <figcaption>Fujin</figcaption>
 </figure>
 
 Por último o furo na PCB tem 15mm de diâmetro
