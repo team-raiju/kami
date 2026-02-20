@@ -42,10 +42,10 @@
     const pdfUrl = `/documents/${botInfo.name}_${botInfo.version.toUpperCase()}.pdf`;
 </script>
 
-<div class="font-grotesk fixed inset-0 flex flex-col overflow-hidden bg-black text-white md:flex-row">
+<div class="font-grotesk flex min-h-screen flex-col bg-black text-white md:fixed md:inset-0 md:flex-row md:overflow-hidden">
     <GridBackground />
 
-    <aside class="relative z-10 flex h-[40vh] w-full flex-col border-r border-white/10 bg-black/80 backdrop-blur-md md:h-full md:w-[30%]">
+    <aside class="relative z-10 flex h-screen w-full flex-col border-r border-white/10 bg-black/80 backdrop-blur-md md:h-full md:w-[30%]">
         <div class="relative h-1/2 w-full overflow-hidden border-b border-white/10">
             <div class="absolute top-6 left-6 z-10">
                 <a
@@ -105,7 +105,7 @@
         <Footer />
     </aside>
 
-    <main class="relative z-10 h-full w-full overflow-y-auto scroll-smooth bg-black/50 md:w-[70%]">
+    <main class="relative z-10 w-full scroll-smooth bg-black/50 md:h-full md:w-[70%] md:overflow-y-auto">
         <div class="mx-auto max-w-4xl px-6 py-16 md:px-8 md:py-24">
             <div class="mb-16 border-b border-white/10 pb-8">
                 <span class="mb-4 inline-block rounded border border-violet-500/30 bg-violet-500/10 px-2 py-1 font-mono text-xs text-violet-400">
