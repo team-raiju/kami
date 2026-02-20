@@ -1,6 +1,6 @@
 <script lang="ts">
     import RobotPage from "$lib/components/RobotPage.svelte";
-    import { marked } from "marked";
+    import { marked } from "$lib/utils/markdown";
 
     import introMd from "$lib/content/robots/fujin/intro.md?raw";
 
