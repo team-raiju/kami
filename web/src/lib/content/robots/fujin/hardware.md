@@ -22,5 +22,3 @@
 | B1  | IMU | [LSM6DSRTR](https://www.st.com/resource/en/datasheet/lsm6dsr.pdf) |
 | IC2  | Memória EEPROM | [24LC512-E_SN](https://www.microchip.com/en-us/product/24lc512) |
 | U7  | Bluetooth | [JDY-10](https://myosuploads3.banggood.com/products/20190515/20190515052519JDY-10M.pdf) |
-
-<inserir esquemático>
