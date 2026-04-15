@@ -230,9 +230,4 @@
   });
 </script>
 
-<div class="flex h-full w-full flex-col border border-gray-500/25 font-mono text-purple-500">
-  <div class="flex flex-row items-center bg-purple-500/10">
-    <span class="inline-block bg-purple-500 px-2 py-1 text-xs font-bold text-black uppercase">Maze</span>
-  </div>
-  <div class="grow" bind:this={konvaContainer}></div>
-</div>
+<div class="grow" bind:this={konvaContainer}></div>

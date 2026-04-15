@@ -118,53 +118,44 @@
 
 <svelte:window onkeydown={handleKeydown} />
 
-<div class="flex w-full grow flex-col border border-gray-500/25 font-mono text-amber-500">
-  <div class="flex flex-row items-center bg-amber-500/10">
-    <span class="inline-block bg-amber-500 px-2 py-1 text-xs font-bold text-black uppercase">Controls</span>
-    <button class="ml-auto icon-[material-symbols--bluetooth] cursor-pointer align-middle" title="Bluetooth"> </button>
-    <button class="mr-1 ml-2 icon-[material-symbols--usb] cursor-pointer align-middle" title="USB Serial"> </button>
-  </div>
-  <!-- <div class="p-2 text-center text-sm text-amber-500/80">Use arrow keys to control the robot</div> -->
-  <div class="flex flex-row gap-2 px-2 py-1">
-    <input
-      type="checkbox"
-      id="lock-maze"
-      bind:checked={maze.state.editLocked}
-      class="h-4 w-4 cursor-pointer appearance-none rounded-sm border-2 border-amber-500/40 bg-transparent
+<div class="flex flex-row gap-2 px-2 py-1">
+  <input
+    type="checkbox"
+    id="lock-maze"
+    bind:checked={maze.state.editLocked}
+    class="h-4 w-4 cursor-pointer appearance-none rounded-sm border-2 border-amber-500/40 bg-transparent
     transition-colors checked:border-transparent checked:bg-amber-500 focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
     focus:ring-offset-black focus:outline-none"
-    />
-    <label for="lock-maze" class="cursor-pointer text-sm select-none">Lock Maze</label>
-  </div>
-  <!-- <div class="w-full border-t border-amber-500/20"></div> -->
-  <div class="mt-auto grid grid-cols-2 gap-2 p-2">
-    <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Robot Logs</div>
-    <button onclick={handleLogRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
-      Read
-    </button>
-    <button
-      onclick={handleLogImport}
-      class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
-    >
-      Import
-    </button>
-  </div>
-  <div class="mt grid grid-cols-3 gap-2 p-2">
-    <div class="col-span-3 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Maze</div>
-    <button onclick={handleMazeRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
-      Read
-    </button>
-    <button
-      onclick={handleMazeExport}
-      class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
-    >
-      Export
-    </button>
-    <button
-      onclick={handleMazeImport}
-      class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
-    >
-      Import
-    </button>
-  </div>
+  />
+  <label for="lock-maze" class="cursor-pointer text-sm select-none">Lock Maze</label>
+</div>
+<div class="mt-auto grid grid-cols-2 gap-2 p-2">
+  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Robot Logs</div>
+  <button onclick={handleLogRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
+    Read
+  </button>
+  <button
+    onclick={handleLogImport}
+    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+  >
+    Import
+  </button>
+</div>
+<div class="mt grid grid-cols-3 gap-2 p-2">
+  <div class="col-span-3 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Maze</div>
+  <button onclick={handleMazeRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
+    Read
+  </button>
+  <button
+    onclick={handleMazeExport}
+    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+  >
+    Export
+  </button>
+  <button
+    onclick={handleMazeImport}
+    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+  >
+    Import
+  </button>
 </div>
