@@ -1,5 +1,6 @@
 <script lang="ts">
   import MazeControls from "$lib/components/MazeControls.svelte";
+  import TrackControls from "$lib/components/TrackControls.svelte";
 
   let { tool = "fujin" }: { tool?: "fujin" | "raijin" | "raiju" } = $props();
 </script>
@@ -12,6 +13,8 @@
   </div>
   {#if tool === "fujin"}
     <MazeControls />
+  {:else if tool === "raijin"}
+    <TrackControls />
   {:else}
     <div class="flex grow items-center justify-center p-4 text-gray-500">
       <span class="text-sm uppercase">{tool}</span>

@@ -1,5 +1,6 @@
 <script lang="ts">
   import Maze from "$lib/components/Maze.svelte";
+  import Track from "$lib/components/Track.svelte";
 
   let { tool = "fujin" }: { tool?: "fujin" | "raijin" | "raiju" } = $props();
 </script>
@@ -10,6 +11,8 @@
   </div>
   {#if tool === "fujin"}
     <Maze />
+  {:else if tool === "raijin"}
+    <Track />
   {:else}
     <div class="flex grow items-center justify-center bg-gray-900/50">
       <span class="text-4xl font-bold text-amber-500 uppercase opacity-20">{tool}</span>
