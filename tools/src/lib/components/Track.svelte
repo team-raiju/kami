@@ -11,7 +11,9 @@
   const MAX_SCALE = 10;
 
   function redrawTrack() {
-    if (!layer) return;
+    if (!layer) {
+      return;
+    }
 
     layer.destroyChildren();
 
@@ -47,31 +49,56 @@
       scaleY: -scale,
     });
 
-    const linePoints: number[] = [];
-    points.forEach((p) => {
-      linePoints.push(p.x, p.y);
-    });
+    trackGroup.add(
+      ...points.map(
+        (p, i) =>
+          new Konva.Circle({
+            x: p.x,
+            y: p.y,
+            radius: 2 / scale,
+            fill: i === 0 ? "#22c55e" : i === points.length - 1 ? "#ef4444" : "#64748b",
+          }),
+      ),
+    );
 
-    const pathLine = new Konva.Line({
-      points: linePoints,
-      stroke: "#f59e0b",
-      strokeWidth: 2 / scale,
-      lineCap: "round",
-      lineJoin: "round",
+    const crossSize = 30 / scale;
+    const crossColor = "rgba(255,255,255,0.3)";
+    const hLine = new Konva.Line({
+      points: [-crossSize, 0, crossSize, 0],
+      stroke: crossColor,
+      strokeWidth: 1 / scale,
     });
-    trackGroup.add(pathLine);
-
-    points.forEach((p, i) => {
-      const dot = new Konva.Circle({
-        x: p.x,
-        y: p.y,
-        radius: 4 / scale,
-        fill: i === 0 ? "#22c55e" : i === points.length - 1 ? "#ef4444" : "#f59e0b",
-      });
-      trackGroup.add(dot);
+    const vLine = new Konva.Line({
+      points: [0, -crossSize, 0, crossSize],
+      stroke: crossColor,
+      strokeWidth: 1 / scale,
     });
-
+    trackGroup.add(hLine);
+    trackGroup.add(vLine);
     layer.add(trackGroup);
+
+    const shortcutPoints = track.state.shortcutPoints;
+    if (shortcutPoints.length > 0) {
+      const shortcutGroup = new Konva.Group({
+        x: centerX - minX * scale,
+        y: centerY + maxY * scale,
+        scaleX: scale,
+        scaleY: -scale,
+      });
+      shortcutGroup.add(
+        ...shortcutPoints.map(
+          (p) =>
+            new Konva.Circle({
+              x: p.x,
+              y: p.y,
+              radius: 2 / scale,
+              fill: "#f59e0b",
+            }),
+        ),
+      );
+      layer.add(shortcutGroup);
+    }
+
     layer.batchDraw();
   }
 
@@ -110,17 +137,32 @@
     });
 
     let isDragging = false;
+    let dragStart = { x: 0, y: 0 };
     stage.on("mousedown", () => {
       isDragging = true;
+      const pos = stage.getPointerPosition();
+      if (pos) {
+        dragStart = { x: pos.x - stage.x(), y: pos.y - stage.y() };
+      }
     });
     stage.on("mouseup", () => {
       isDragging = false;
     });
     stage.on("mousemove", (e) => {
-      if (!isDragging) return;
+      if (!isDragging) {
+        return;
+      }
+
       const pos = stage.getPointerPosition();
-      if (!pos) return;
-      stage.position(pos);
+
+      if (!pos) {
+        return;
+      }
+
+      stage.position({
+        x: pos.x - dragStart.x,
+        y: pos.y - dragStart.y,
+      });
     });
 
     $effect.pre(() => {

@@ -7,11 +7,13 @@ export interface TrackPoint {
 
 export interface TrackState {
   points: TrackPoint[];
+  shortcutPoints: TrackPoint[];
 }
 
 function createInitialTrackState(): TrackState {
   return {
     points: [],
+    shortcutPoints: [],
   };
 }
 
@@ -44,4 +46,8 @@ export const track = {
   },
 
   load,
+
+  setShortcutPoints(points: TrackPoint[]) {
+    state.shortcutPoints = points;
+  },
 };
