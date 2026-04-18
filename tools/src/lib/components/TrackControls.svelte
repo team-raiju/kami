@@ -10,6 +10,7 @@
   let sharpAngleThPi = $state(0.3);
   let angleLookahead = $state(10);
   let cornerPadding = $state(10);
+  let isCalculating = $state(false);
 
   function decrementK() {
     if (k > 2) k -= 2;
@@ -28,7 +29,12 @@
     track.setShortcutPoints(result);
   }
 
-  function handleDijkstraShortcut() {
+  async function handleDijkstraShortcut() {
+    if (isCalculating) return;
+    isCalculating = true;
+
+    await new Promise((r) => setTimeout(r, 0));
+
     const pathConfig: PathConfig = {
       window_large: windowLarge,
       window_small: windowSmall,
@@ -36,9 +42,13 @@
       angle_lookahead: angleLookahead,
       corner_padding: cornerPadding,
     };
-    const result = autoShortcut(track.state.points, pathConfig);
-    track.setShortcutPoints(result);
-    log.info(`Dijkstra shortcut: ${result.length} points`);
+    try {
+      const result = autoShortcut(track.state.points, pathConfig);
+      track.setShortcutPoints(result);
+      log.info(`Dijkstra shortcut: ${result.length} points`);
+    } finally {
+      isCalculating = false;
+    }
   }
 
   async function handleLogRead() {
@@ -77,6 +87,7 @@
         return;
       }
 
+      handleClearShortcut();
       track.load(content);
     } catch (err: any) {
       if (err.name !== "AbortError") {
@@ -86,15 +97,6 @@
     }
   }
 </script>
-
-{#snippet numBtn(label: string, val: any, onDec: () => void, onInc: () => void)}
-  <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">{label}</span>
-    <button onclick={onDec} class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&lt;</button>
-    <span class="text-xs text-amber-500">{val}</span>
-    <button onclick={onInc} class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&gt;</button>
-  </div>
-{/snippet}
 
 <div class="grid grid-cols-2 gap-2 p-2">
   <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Calculate Shortcut</div>
@@ -113,43 +115,106 @@
   </div>
 </div>
 <div class="mt grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Dijkstra Shortcut</div>
+  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">
+    Dijkstra Shortcut {isCalculating ? "(calculating...)" : ""}
+  </div>
   <button
     onclick={handleDijkstraShortcut}
-    class="col-span-2 cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+    class="col-span-2 cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20 disabled:opacity-50"
+    disabled={isCalculating}
   >
-    Calculate
+    {isCalculating ? "..." : "Calculate"}
   </button>
-  {@render numBtn(
-    "WL:",
-    windowLarge,
-    () => (windowLarge = Math.max(2, windowLarge - 2)),
-    () => (windowLarge += 2),
-  )}
-  {@render numBtn(
-    "WS:",
-    windowSmall,
-    () => (windowSmall = Math.max(2, windowSmall - 2)),
-    () => (windowSmall += 2),
-  )}
-  {@render numBtn(
-    "Th:",
-    sharpAngleThPi.toFixed(2) + "π",
-    () => (sharpAngleThPi = Math.max(0.05, sharpAngleThPi - 0.05)),
-    () => (sharpAngleThPi += 0.05),
-  )}
-  {@render numBtn(
-    "LA:",
-    angleLookahead,
-    () => (angleLookahead = Math.max(1, angleLookahead - 1)),
-    () => (angleLookahead += 1),
-  )}
-  {@render numBtn(
-    "CP:",
-    cornerPadding,
-    () => (cornerPadding = Math.max(0, cornerPadding - 1)),
-    () => (cornerPadding += 1),
-  )}
+  <div class="col-span-1 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">WL:</span>
+    <button
+      onclick={() => (windowLarge = Math.max(2, windowLarge - 2))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &lt;
+    </button>
+    <span class="text-xs text-amber-500">{windowLarge}</span>
+    <button
+      onclick={() => (windowLarge += 2)}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &gt;
+    </button>
+  </div>
+  <div class="col-span-1 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">WS:</span>
+    <button
+      onclick={() => (windowSmall = Math.max(2, windowSmall - 2))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &lt;
+    </button>
+    <span class="text-xs text-amber-500">{windowSmall}</span>
+    <button
+      onclick={() => (windowSmall += 2)}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &gt;
+    </button>
+  </div>
+  <div class="col-span-1 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">Th:</span>
+    <button
+      onclick={() => (sharpAngleThPi = Math.max(0.05, sharpAngleThPi - 0.05))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &lt;
+    </button>
+    <span class="text-xs text-amber-500">{sharpAngleThPi.toFixed(2)}π</span>
+    <button
+      onclick={() => (sharpAngleThPi += 0.05)}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &gt;
+    </button>
+  </div>
+  <div class="col-span-1 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">LA:</span>
+    <button
+      onclick={() => (angleLookahead = Math.max(1, angleLookahead - 1))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &lt;
+    </button>
+    <span class="text-xs text-amber-500">{angleLookahead}</span>
+    <button
+      onclick={() => (angleLookahead += 1)}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &gt;
+    </button>
+  </div>
+  <div class="col-span-1 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">CP:</span>
+    <button
+      onclick={() => (cornerPadding = Math.max(0, cornerPadding - 1))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &lt;
+    </button>
+    <span class="text-xs text-amber-500">{cornerPadding}</span>
+    <button
+      onclick={() => (cornerPadding += 1)}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      disabled={isCalculating}
+    >
+      &gt;
+    </button>
+  </div>
 </div>
 <div class="mt-auto grid grid-cols-2 gap-2 p-2">
   <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Robot Logs</div>

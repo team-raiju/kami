@@ -248,9 +248,9 @@ export function costTurn(
   if (arcLength < 0.05) {
     return arcLength / turnVelocity;
   } else if (arcLength < thresholdLength) {
-    return 2.0 * (Math.sqrt(turnVelocity * turnVelocity + arcLength * acceleration) - turnVelocity) / acceleration;
+    return (2.0 * (Math.sqrt(turnVelocity * turnVelocity + arcLength * acceleration) - turnVelocity)) / acceleration;
   } else {
-    return (arcLength + (maxVelocity - turnVelocity) * (maxVelocity - turnVelocity) / acceleration) / maxVelocity;
+    return (arcLength + ((maxVelocity - turnVelocity) * (maxVelocity - turnVelocity)) / acceleration) / maxVelocity;
   }
 }
 
@@ -325,7 +325,7 @@ function getAdjacent(
       const curvature = (2 * distLateral) / (distLongitudinal * distLongitudinal + distLateral * distLateral);
       const angularRadius = 2 * Math.atan2(Math.abs(distLateral), distLongitudinal);
 
-      const predictedAngle = currentAngle + (angularRadius * (curvature > 0 ? 1 : -1));
+      const predictedAngle = currentAngle + angularRadius * (curvature > 0 ? 1 : -1);
       let angleError = Math.abs(((targetAngle - predictedAngle + Math.PI) % (2 * Math.PI)) - Math.PI);
 
       if (angleError < config.ang_th && minCurvBound < curvature && maxCurvBound && lookaheadIdx >= 0) {
@@ -354,7 +354,9 @@ function getAdjacent(
   return adjacentList;
 }
 
-export function autoShortcut(waypoints: TrackPoint[], pathConfig: PathConfig): TrackPoint[] {
+export function autoShortcut(rawWaypoints: TrackPoint[], pathConfig: PathConfig): TrackPoint[] {
+  const waypoints = rawWaypoints.map(({ x, y }) => ({ x: x / 1000, y: y / 1000 }));
+
   const smoothedWaypoints = smoothPath(waypoints, pathConfig);
   const nodes: TrackPoint[][] = [waypoints, smoothedWaypoints];
   const numNodes = nodes[0].length;
@@ -449,5 +451,6 @@ export function autoShortcut(waypoints: TrackPoint[], pathConfig: PathConfig): T
   finalX.push(nodes[0][numNodes - 1].x);
   finalY.push(nodes[0][numNodes - 1].y);
 
-  return finalX.map((x, i) => ({ x, y: finalY[i] }));
+  // Back to mm
+  return finalX.map((x, i) => ({ x: x * 1000, y: finalY[i] * 1000 }));
 }
