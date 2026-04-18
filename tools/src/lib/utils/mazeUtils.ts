@@ -1,5 +1,5 @@
-import { log } from "./logsState.svelte";
-import type { MazeState } from "./mazeState.svelte";
+import { log } from "../state/logsState.svelte";
+import type { MazeState } from "../state/mazeState.svelte";
 
 const GRID_SIZE = 16;
 

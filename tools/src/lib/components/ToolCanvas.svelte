@@ -2,7 +2,7 @@
   import Maze from "$lib/components/Maze.svelte";
   import Track from "$lib/components/Track.svelte";
 
-  let { tool = "fujin" }: { tool?: "fujin" | "raijin" | "raiju" } = $props();
+  let { tool = "raijin" }: { tool?: "fujin" | "raijin" | "raiju" } = $props();
 </script>
 
 <div class="flex h-full w-full flex-col border border-gray-500/25 font-mono text-purple-500">

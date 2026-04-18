@@ -1,8 +1,8 @@
 <script lang="ts">
-  import { log } from "$lib/logsState.svelte";
-  import { maze } from "$lib/mazeState.svelte";
-  import { robotLog, type RobotLogRecord } from "$lib/robotLogState.svelte";
-  import { mazeStateToString, stringToMazeState } from "$lib/mazeUtils";
+  import { log } from "$lib/state/logsState.svelte";
+  import { maze } from "$lib/state/mazeState.svelte";
+  import { robotLog, type RobotLogRecord } from "$lib/state/robotLogState.svelte";
+  import { mazeStateToString, stringToMazeState } from "$lib/utils/mazeUtils";
 
   async function handleMazeExport() {
     const mazeString = mazeStateToString(maze.state);

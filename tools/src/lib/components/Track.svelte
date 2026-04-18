@@ -1,7 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Konva from "konva";
-  import { track } from "$lib/trackState.svelte";
+  import { track } from "$lib/state/trackState.svelte";
 
   let container: HTMLDivElement;
   let stage: Konva.Stage;
@@ -55,7 +55,7 @@
           new Konva.Circle({
             x: p.x,
             y: p.y,
-            radius: 2 / scale,
+            radius: 1.5 / scale,
             fill: i === 0 ? "#22c55e" : i === points.length - 1 ? "#ef4444" : "#64748b",
           }),
       ),
@@ -92,7 +92,7 @@
               x: p.x,
               y: p.y,
               radius: 2 / scale,
-              fill: "#f59e0b",
+              fill: "#c4b5fd",
             }),
         ),
       );

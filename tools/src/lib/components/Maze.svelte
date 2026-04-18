@@ -1,9 +1,9 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import Konva from "konva";
-  import { maze } from "$lib/mazeState.svelte";
-  import { robotLog } from "$lib/robotLogState.svelte";
-  import { getHeatmapColor } from "$lib/mazeUtils";
+  import { maze } from "$lib/state/mazeState.svelte";
+  import { robotLog } from "$lib/state/robotLogState.svelte";
+  import { getHeatmapColor } from "$lib/utils/mazeUtils";
 
   const GRID_SIZE = 16;
 

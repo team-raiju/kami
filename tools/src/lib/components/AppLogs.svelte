@@ -1,6 +1,6 @@
 <script lang="ts">
   import { format } from "date-fns";
-  import { log } from "$lib/logsState.svelte";
+  import { log } from "$lib/state/logsState.svelte";
 
   let scrollContainer: HTMLDivElement;
 

@@ -8,7 +8,7 @@
   let serialLogsOpen = $state(false);
 
   type Tool = "fujin" | "raijin" | "raiju";
-  let selectedTool: Tool = $state("fujin");
+  let selectedTool: Tool = $state("raijin");
 
   const serialLogs: string[] = [];
 </script>
