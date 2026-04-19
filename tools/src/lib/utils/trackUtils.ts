@@ -52,34 +52,6 @@ const ROBOT_CONFIG = {
   dl: 0.01, // Resolution/discretization step length for drawing paths (meters)
 };
 
-function getCurvature(waypoints: TrackPoint[], index: number, offset: number = 5): number {
-  const minOffset = Math.min(offset, index, waypoints.length - index - 1);
-  if (offset > minOffset) {
-    return 0.0;
-  }
-
-  const vecPrevX = waypoints[index].x - waypoints[index - offset].x;
-  const vecPrevY = waypoints[index].y - waypoints[index - offset].y;
-  const vecNextX = waypoints[index + offset].x - waypoints[index].x;
-  const vecNextY = waypoints[index + offset].y - waypoints[index].y;
-
-  const anglePrev = Math.atan2(vecPrevY, vecPrevX);
-  const angleNext = Math.atan2(vecNextY, vecNextX);
-  let angleDiff = angleNext - anglePrev;
-
-  const lenPrev = Math.sqrt(vecPrevX * vecPrevX + vecPrevY * vecPrevY);
-  const lenNext = Math.sqrt(vecNextX * vecNextX + vecNextY * vecNextY);
-  const avgSegmentLen = 0.5 * (lenPrev + lenNext);
-
-  if (angleDiff < -Math.PI) {
-    angleDiff += 2.0 * Math.PI;
-  } else if (angleDiff > Math.PI) {
-    angleDiff -= 2.0 * Math.PI;
-  }
-
-  return angleDiff / avgSegmentLen;
-}
-
 export function getAngle(waypoints: TrackPoint[], index: number, offset: number = 5): number {
   if (index - offset < 0) {
     return getAngle(waypoints, offset, offset);
@@ -326,9 +298,9 @@ function getAdjacent(
       const angularRadius = 2 * Math.atan2(Math.abs(distLateral), distLongitudinal);
 
       const predictedAngle = currentAngle + angularRadius * (curvature > 0 ? 1 : -1);
-      let angleError = Math.abs(((targetAngle - predictedAngle + Math.PI) % (2 * Math.PI)) - Math.PI);
+      const angleError = Math.abs(((targetAngle - predictedAngle + Math.PI) % (2 * Math.PI)) - Math.PI);
 
-      if (angleError < config.ang_th && minCurvBound < curvature && maxCurvBound && lookaheadIdx >= 0) {
+      if (angleError < config.ang_th && minCurvBound < curvature && curvature < maxCurvBound) {
         if (angularRadius < config.ang_th) {
           const chordLength = Math.sqrt(distLongitudinal * distLongitudinal + distLateral * distLateral);
           const cost = costStraight(chordLength, config.acc_straight, config.vmax_straight, config.vturn);
@@ -349,12 +321,17 @@ function getAdjacent(
       }
     }
     lookaheadIdx++;
+
+    if (adjacentList.length > maxNumAdjacent) {
+      adjacentList.shift();
+    }
   }
 
   return adjacentList;
 }
 
 export function autoShortcut(rawWaypoints: TrackPoint[], pathConfig: PathConfig): TrackPoint[] {
+  log.info("Calculating auto shortcut");
   const waypoints = rawWaypoints.map(({ x, y }) => ({ x: x / 1000, y: y / 1000 }));
 
   const smoothedWaypoints = smoothPath(waypoints, pathConfig);
@@ -410,9 +387,13 @@ export function autoShortcut(rawWaypoints: TrackPoint[], pathConfig: PathConfig)
     }
   }
 
-  const finalX: number[] = [];
-  const finalY: number[] = [];
+  const pathChunks: TrackPoint[][] = [];
   let targetNode: NodeKey = { idx: numNodes - 1, layer: 0 };
+
+  function npSinc(x: number): number {
+    if (Math.abs(x) < 1e-6) return 1.0;
+    return Math.sin(Math.PI * x) / (Math.PI * x);
+  }
 
   while (true) {
     const parentNode = parentMatrix[targetNode.layer][targetNode.idx];
@@ -432,15 +413,34 @@ export function autoShortcut(rawWaypoints: TrackPoint[], pathConfig: PathConfig)
 
     const distLongitudinal = tangentVec.x * (ptEnd.x - ptStart.x) + tangentVec.y * (ptEnd.y - ptStart.y);
     const distLateral = normalVec.x * (ptEnd.x - ptStart.x) + normalVec.y * (ptEnd.y - ptStart.y);
-    const arcLength = Math.sqrt(distLongitudinal * distLongitudinal + distLateral * distLateral);
+    const denom = distLongitudinal * distLongitudinal + distLateral * distLateral;
+
+    const curvature = denom !== 0.0 ? (2.0 * distLateral) / denom : 0.0;
+    const angularRadius = 2.0 * Math.atan2(Math.abs(distLateral), distLongitudinal);
+    const arcLength = angularRadius === 0.0 ? Math.sqrt(denom) : Math.sqrt(denom) / npSinc((0.5 * angularRadius) / Math.PI);
+
+    const chunk: TrackPoint[] = [];
 
     for (let i = 0; i < numPointsSkipped; i++) {
-      const s = (i / numPointsSkipped) * arcLength;
-      const x = ptStart.x + (s / arcLength) * (ptEnd.x - ptStart.x);
-      const y = ptStart.y + (s / arcLength) * (ptEnd.y - ptStart.y);
-      finalX.push(x);
-      finalY.push(y);
+      const s = (arcLength * i) / numPointsSkipped;
+      if (angularRadius < ROBOT_CONFIG.ang_th) {
+        const px = arcLength > 0.0 ? ptStart.x + (s / arcLength) * (ptEnd.x - ptStart.x) : ptStart.x;
+        const py = arcLength > 0.0 ? ptStart.y + (s / arcLength) * (ptEnd.y - ptStart.y) : ptStart.y;
+        chunk.push({ x: px, y: py });
+      } else {
+        if (s === 0.0) {
+          chunk.push({ x: ptStart.x, y: ptStart.y });
+        } else {
+          const dt = s * npSinc((curvature * s) / Math.PI);
+          const dn = s * npSinc((0.5 * curvature * s) / Math.PI) * Math.sin(0.5 * curvature * s);
+          chunk.push({
+            x: ptStart.x + dt * tangentVec.x + dn * normalVec.x,
+            y: ptStart.y + dt * tangentVec.y + dn * normalVec.y,
+          });
+        }
+      }
     }
+    pathChunks.push(chunk);
 
     if (parentNode.idx === 0 && parentNode.layer === 0) {
       break;
@@ -448,9 +448,10 @@ export function autoShortcut(rawWaypoints: TrackPoint[], pathConfig: PathConfig)
     targetNode = parentNode;
   }
 
-  finalX.push(nodes[0][numNodes - 1].x);
-  finalY.push(nodes[0][numNodes - 1].y);
+  pathChunks.reverse();
+  const finalPath = pathChunks.flat();
+  finalPath.push(nodes[0][numNodes - 1]);
 
   // Back to mm
-  return finalX.map((x, i) => ({ x: x * 1000, y: finalY[i] * 1000 }));
+  return finalPath.map(({ x, y }) => ({ x: x * 1000, y: y * 1000 }));
 }
