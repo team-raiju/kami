@@ -10,13 +10,11 @@
 
   type Tool = "fujin" | "raijin" | "raiju";
   let selectedTool: Tool = $state("raijin");
-
-  const serialLogs: string[] = [];
 </script>
 
 <main class="grid h-screen w-screen grid-cols-[600px_1fr] grid-rows-[2rem_1fr] overflow-hidden bg-black text-gray-300">
   <header class="col-span-2 flex flex-row items-center border-b border-b-gray-500/25 px-10 font-jp">
-    <span class="font-jp">雷獣</span>
+    <span class="font-title">Team Raiju</span>
     <div class="ml-auto flex flex-row gap-4 uppercase">
       <button class="cursor-not-allowed px-2 py-1 text-xs font-bold text-gray-500" disabled>raiju</button>
       <button
@@ -40,6 +38,8 @@
   <div class="box-border flex flex-col gap-2 p-3">
     <Controls tool={selectedTool} />
 
+    <!-- svelte-ignore a11y_click_events_have_key_events -->
+    <!-- svelte-ignore a11y_no_static_element_interactions -->
     <div class="w-full font-mono text-sm text-violet-500" onclick={() => (serialLogsOpen = !serialLogsOpen)}>
       <div class="flex flex-row items-center bg-violet-500/10">
         <span class="inline-block cursor-pointer bg-violet-500 px-2 py-1 text-xs font-bold text-black uppercase select-none">Serial Logs</span>

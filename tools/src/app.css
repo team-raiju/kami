@@ -3,7 +3,16 @@
 
 @plugin "@iconify/tailwind4";
 
+@font-face {
+  font-family: "Amanojaku";
+  src: url("/fonts/amanojaku.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @theme {
+  --font-title: "Amanojaku", "Noto Sans JP", sans-serif;
   --font-jp: "Zen Maru Gothic", sans-serif;
 }
 
