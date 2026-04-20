@@ -1,9 +1,13 @@
 <script lang="ts">
   import { log } from "$lib/state/logsState.svelte";
+  import { serial } from "$lib/state/serialState.svelte";
   import { track } from "$lib/state/trackState.svelte";
   import { movingAverage, autoShortcut, type PathConfig } from "$lib/utils/trackUtils";
 
   let k = $state(10);
+
+  let straightFrom = $state(0);
+  let straightTo = $state(0);
 
   let windowLarge = $state(20);
   let windowSmall = $state(10);
@@ -11,6 +15,19 @@
   let angleLookahead = $state(10);
   let cornerPadding = $state(10);
   let isCalculating = $state(false);
+  let selectedPointIndex = $state(track.state.selectedPointIndex);
+  let selectedPointInfo = $derived.by(() => {
+    const points = track.state.points;
+    if (points.length === 0) return "No points";
+    const idx = selectedPointIndex;
+    if (idx < 0 || idx >= points.length) return "Index out of range";
+    const p = points[idx];
+    return `(${idx}) x:${p.x.toFixed(4)}, y:${p.y.toFixed(4)}`;
+  });
+
+  $effect(() => {
+    track.state.selectedPointIndex = selectedPointIndex;
+  });
 
   function decrementK() {
     if (k > 2) k -= 2;
@@ -22,6 +39,37 @@
 
   function handleClearShortcut() {
     track.setShortcutPoints([]);
+  }
+
+  function handleResetShortcut() {
+    track.setShortcutPoints([...track.state.points]);
+    log.info("Shortcut reset to track");
+  }
+
+  function handleStraighten() {
+    const shortcut = track.state.shortcutPoints;
+    const from = Math.max(0, Math.min(straightFrom, straightTo));
+    const to = Math.min(shortcut.length - 1, Math.max(straightFrom, straightTo));
+
+    if (to - from < 2) {
+      log.error("Range too small");
+      return;
+    }
+
+    const pStart = shortcut[from];
+    const pEnd = shortcut[to];
+
+    const newShortcut = [...shortcut];
+    for (let i = from + 1; i < to; i++) {
+      const t = i - from;
+      newShortcut[i] = {
+        x: pStart.x + (pEnd.x - pStart.x) * (t / (to - from)),
+        y: pStart.y + (pEnd.y - pStart.y) * (t / (to - from)),
+      };
+    }
+
+    track.setShortcutPoints(newShortcut);
+    log.info(`Straightened ${from}-${to}`);
   }
 
   function handleMovingAverage() {
@@ -67,6 +115,18 @@
     log.info("Track copied to clipboard");
   }
 
+  async function handleShortcutExport() {
+    const points = track.state.shortcutPoints;
+    if (points.length === 0) {
+      log.error("No shortcut to export");
+      return;
+    }
+
+    const content = points.map((p) => `${p.x.toFixed(6)},${p.y.toFixed(6)}`).join("\n");
+    await navigator.clipboard.writeText(content);
+    log.info("Shortcut copied to clipboard");
+  }
+
   async function handleTrackImport() {
     try {
       const [handle] = await window.showOpenFilePicker({
@@ -97,6 +157,30 @@
     }
   }
 </script>
+
+<div class="grid grid-cols-2 gap-2 p-2">
+  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Track Explorer</div>
+  <div class="col-span-2 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">Idx:</span>
+    <button
+      onclick={() => (selectedPointIndex = Math.max(0, selectedPointIndex - 1))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&lt;</button
+    >
+    <input
+      type="range"
+      min="0"
+      max={Math.max(0, track.state.points.length - 1)}
+      bind:value={selectedPointIndex}
+      class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-amber-500/30 accent-amber-500"
+    />
+    <button
+      onclick={() => (selectedPointIndex = Math.min(track.state.points.length - 1, selectedPointIndex + 1))}
+      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&gt;</button
+    >
+    <span class="text-xs text-amber-500">{selectedPointIndex}/{track.state.points.length}</span>
+  </div>
+  <div class="col-span-2 text-xs text-amber-500">{selectedPointInfo}</div>
+</div>
 
 <div class="grid grid-cols-2 gap-2 p-2">
   <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Calculate Shortcut</div>
@@ -216,6 +300,21 @@
     </button>
   </div>
 </div>
+<div class="mt grid grid-cols-2 gap-2 p-2">
+  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Manual Shortcut</div>
+  <button onclick={handleResetShortcut} class="cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20">
+    Reset
+  </button>
+  <div class="col-span-2 flex flex-row items-center gap-1">
+    <span class="text-xs text-amber-500">From:</span>
+    <input type="number" bind:value={straightFrom} class="w-12 bg-amber-500/10 px-1 text-xs text-amber-500" />
+    <span class="text-xs text-amber-500">To:</span>
+    <input type="number" bind:value={straightTo} class="w-12 bg-amber-500/10 px-1 text-xs text-amber-500" />
+    <button onclick={handleStraighten} class="cursor-pointer bg-amber-500/10 px-2 py-1 text-xs text-amber-500 uppercase hover:bg-amber-500/20">
+      Straighten
+    </button>
+  </div>
+</div>
 <div class="mt-auto grid grid-cols-2 gap-2 p-2">
   <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Robot Logs</div>
   <button onclick={handleLogRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
@@ -225,7 +324,12 @@
 </div>
 <div class="mt grid grid-cols-3 gap-2 p-2">
   <div class="col-span-3 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Track</div>
-  <button class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled> Read </button>
+  <button
+    onclick={handleTrackImport}
+    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+  >
+    Import
+  </button>
   <button
     onclick={handleTrackExport}
     class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
@@ -233,9 +337,19 @@
     Export
   </button>
   <button
-    onclick={handleTrackImport}
+    onclick={handleShortcutExport}
     class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
   >
-    Import
+    Export SC
+  </button>
+  <button
+    onclick={serial.readTrack}
+    class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase"
+    disabled={!serial.connected}
+  >
+    Read
+  </button>
+  <button class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled={!serial.connected}>
+    Write SC
   </button>
 </div>

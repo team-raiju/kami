@@ -99,6 +99,21 @@
       layer.add(shortcutGroup);
     }
 
+    const selectedIdx = track.state.selectedPointIndex;
+    if (selectedIdx >= 0 && selectedIdx < points.length) {
+      const selectedPoint = points[selectedIdx];
+      if (selectedPoint) {
+        const marker = new Konva.Circle({
+          x: centerX - minX * scale + selectedPoint.x * scale,
+          y: centerY + maxY * scale - selectedPoint.y * scale,
+          radius: 3,
+          stroke: "#ef4444",
+          strokeWidth: 2,
+        });
+        layer.add(marker);
+      }
+    }
+
     layer.batchDraw();
   }
 
@@ -167,6 +182,8 @@
 
     $effect.pre(() => {
       const _ = track.state.points;
+      const __ = track.state.shortcutPoints;
+      const ___ = track.state.selectedPointIndex;
       redrawTrack();
     });
   });

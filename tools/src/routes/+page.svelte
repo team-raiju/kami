@@ -3,6 +3,7 @@
   import AppLogs from "$lib/components/AppLogs.svelte";
   import Controls from "$lib/components/Controls.svelte";
   import ToolCanvas from "$lib/components/ToolCanvas.svelte";
+  import { log } from "$lib/state/logsState.svelte";
 
   let appLogsOpen = $state(false);
   let serialLogsOpen = $state(false);
@@ -51,7 +52,7 @@
         class:max-h-0={!serialLogsOpen}
       >
         <div class="grid grid-cols-1 items-center gap-2 p-2">
-          {#each serialLogs as entry}
+          {#each log.serial as entry}
             <div
               class={{
                 "border-r  border-gray-700 px-2 py-1 text-gray-400": true,

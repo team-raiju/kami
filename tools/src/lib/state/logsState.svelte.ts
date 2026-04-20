@@ -9,10 +9,22 @@ export interface LogEntry {
 }
 
 const logs = $state<LogEntry[]>([]);
+const serialLogs = $state<string[]>([]);
 
 export const log = {
   get entries() {
     return logs;
+  },
+
+  get serial() {
+    return serialLogs;
+  },
+
+  addSerial(message: string) {
+    serialLogs.push(message);
+    if (serialLogs.length > MAX_LOGS) {
+      serialLogs.shift();
+    }
   },
 
   info(message: string) {
