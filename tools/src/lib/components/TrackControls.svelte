@@ -5,7 +5,7 @@
   import { movingAverage, autoShortcut, type PathConfig } from "$lib/utils/trackUtils";
   import Modal from "./Modal.svelte";
 
-  const trackFiles = import.meta.glob("/static/tracks/*.txt", { eager: true });
+  const trackFiles = import.meta.glob("/static/tracks/*.txt");
   const trackNames = Object.keys(trackFiles).map((path) => path.split("/").pop()?.replace(".txt", "") ?? path);
 
   let vaultOpen = $state(false);
