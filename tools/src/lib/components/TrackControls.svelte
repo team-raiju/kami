@@ -3,6 +3,20 @@
   import { serial } from "$lib/state/serialState.svelte";
   import { track } from "$lib/state/trackState.svelte";
   import { movingAverage, autoShortcut, type PathConfig } from "$lib/utils/trackUtils";
+  import Modal from "./Modal.svelte";
+
+  const trackFiles = import.meta.glob("/static/tracks/*.txt", { eager: true });
+  const trackNames = Object.keys(trackFiles).map((path) => path.split("/").pop()?.replace(".txt", "") ?? path);
+
+  let vaultOpen = $state(false);
+
+  async function loadVaultTrack(name: string) {
+    const data = await fetch(`/tracks/${name}.txt`);
+    const content = await data.text();
+    handleClearShortcut();
+    track.load(content);
+    log.info(`Loaded: ${name}`);
+  }
 
   let k = $state(10);
 
@@ -352,4 +366,12 @@
   <button class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled={!serial.connected}>
     Write SC
   </button>
+  <button
+    onclick={() => (vaultOpen = true)}
+    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+  >
+    Vault
+  </button>
 </div>
+
+<Modal bind:open={vaultOpen} title="Vault" items={trackNames} onselect={loadVaultTrack}></Modal>
