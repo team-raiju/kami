@@ -6,7 +6,9 @@
 </script>
 
 <svelte:head>
+  <link rel="preload" as="font" href="/fonts/amanojaku.otf" type="font/otf" crossorigin="anonymous" />
   <link rel="icon" href={favicon} />
+  <title>Raiju Tools</title>
 </svelte:head>
 
 {@render children?.()}
