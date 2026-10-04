@@ -1,4 +1,5 @@
 import { log } from "./logsState.svelte";
+import { generateRandomMaze } from "../utils/mazeUtils";
 
 const GRID_SIZE = 16;
 
@@ -48,6 +49,7 @@ function createInitialMazeState(): MazeState {
 
 let state = $state<MazeState>(createInitialMazeState());
 let wallToFlash = $state<WallFlashState | null>(null);
+let version = $state(0);
 
 // Funções de controle do robô
 function forward() {
@@ -111,16 +113,31 @@ export const maze = {
     return wallToFlash;
   },
 
+  get version() {
+    return version;
+  },
+
   set(newState: MazeState) {
     state = newState;
+    version++;
   },
 
   toggleWall(type: "horizontal" | "vertical", r: number, c: number) {
+    if (state.editLocked) return;
     if (type === "horizontal") {
       state.horizontalWalls[r][c] = !state.horizontalWalls[r][c];
     } else {
       state.verticalWalls[r][c] = !state.verticalWalls[r][c];
     }
+    version++;
+  },
+
+  generateRandom() {
+    if (state.editLocked) return;
+    const newState = generateRandomMaze();
+    state.horizontalWalls = newState.horizontalWalls;
+    state.verticalWalls = newState.verticalWalls;
+    version++;
   },
 
   forward,

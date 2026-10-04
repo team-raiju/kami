@@ -46,6 +46,11 @@ function parse_track(data: string[]) {
   rawTrackData[idx] = { x, y };
 }
 
+import { fujinLog } from "./fujinLogState.svelte";
+
+let rawLogBuffer: string[] = [];
+let isCapturingLog = false;
+
 function parse(raw: string) {
   const [type, ...data] = raw.split(":");
 
@@ -66,7 +71,50 @@ function parse(raw: string) {
       break;
     }
 
+    case "log_start": {
+      log.info("Received log start");
+      rawLogBuffer = [];
+      isCapturingLog = true;
+      break;
+    }
+
+    case "log_end": {
+      log.info(`Received log end (${rawLogBuffer.length} lines)`);
+      isCapturingLog = false;
+      if (rawLogBuffer.length > 0) {
+        fujinLog.loadText(rawLogBuffer.join("\n"), "serial_log.txt");
+      }
+      break;
+    }
+
+    case "log": {
+      // e.g. log:idx:data
+      if (data.length >= 2) {
+        rawLogBuffer.push(data.slice(1).join(":"));
+      } else if (data.length === 1) {
+        rawLogBuffer.push(data[0]);
+      }
+      break;
+    }
+
     default: {
+      // Check if this line looks like a CSV telemetry line (semicolons with numbers/headers)
+      if (raw.startsWith("t;") || raw.startsWith("Time;") || raw.startsWith("Time(ms);")) {
+        isCapturingLog = true;
+        rawLogBuffer = [raw];
+        log.info("Started streaming telemetry log");
+      } else if (isCapturingLog) {
+        if (raw.includes(";") && !isNaN(Number(raw.split(";")[0]))) {
+          rawLogBuffer.push(raw);
+          // If we reach the end of log stream or idle after burst
+        } else {
+          // Non-telemetry line received while capturing
+          if (rawLogBuffer.length > 1) {
+            fujinLog.loadText(rawLogBuffer.join("\n"), "streamed_log.txt");
+          }
+          isCapturingLog = false;
+        }
+      }
       log.addSerial(raw);
     }
   }
@@ -138,4 +186,27 @@ export const serial = {
       writer.releaseLock();
     }
   },
+
+  async readLog() {
+    const port = state.port;
+
+    if (!port || !port.writable) {
+      log.error("Port is null or not writable");
+      return;
+    }
+
+    const writer = port.writable.getWriter();
+
+    try {
+      rawLogBuffer = [];
+      isCapturingLog = true;
+      await writer.write(new Uint8Array([header, commands.read_log]));
+      log.info("Requested log dump from robot");
+    } catch (error) {
+      log.error(`${error}`);
+    } finally {
+      writer.releaseLock();
+    }
+  },
 };
+

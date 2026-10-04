@@ -17,13 +17,16 @@
 }
 
 @utility scroll-* {
+  scrollbar-width: thin;
+  scrollbar-color: --value(--color-*) #111827;
+
   &::-webkit-scrollbar {
     width: 10px;
     height: 10px;
   }
 
   &::-webkit-scrollbar-track {
-    background: --value(--color-gray-900);
+    background: #111827;
   }
 
   &::-webkit-scrollbar-thumb {

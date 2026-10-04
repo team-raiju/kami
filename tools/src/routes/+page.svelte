@@ -35,12 +35,12 @@
       </button>
     </div>
   </header>
-  <div class="box-border flex flex-col gap-2 p-3">
+  <div class="box-border flex flex-col gap-2 p-3 min-h-0 h-full overflow-hidden">
     <Controls tool={selectedTool} />
 
     <!-- svelte-ignore a11y_click_events_have_key_events -->
     <!-- svelte-ignore a11y_no_static_element_interactions -->
-    <div class="w-full font-mono text-sm text-violet-500" onclick={() => (serialLogsOpen = !serialLogsOpen)}>
+    <div class="w-full shrink-0 font-mono text-sm text-violet-500" onclick={() => (serialLogsOpen = !serialLogsOpen)}>
       <div class="flex flex-row items-center bg-violet-500/10">
         <span class="inline-block cursor-pointer bg-violet-500 px-2 py-1 text-xs font-bold text-black uppercase select-none">Serial Logs</span>
       </div>
@@ -65,10 +65,12 @@
       </div>
     </div>
 
-    <AppLogs bind:isOpen={appLogsOpen} isOtherOpen={serialLogsOpen} />
+    <div class="shrink-0">
+      <AppLogs bind:isOpen={appLogsOpen} isOtherOpen={serialLogsOpen} />
+    </div>
   </div>
 
-  <div class="box-border h-full p-3">
+  <div class="box-border h-full p-3 min-h-0 min-w-0 overflow-hidden">
     <ToolCanvas tool={selectedTool} />
   </div>
 </main>

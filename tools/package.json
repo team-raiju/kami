@@ -43,6 +43,7 @@
   },
   "dependencies": {
     "date-fns": "^4.1.0",
-    "konva": "^10.2.5"
+    "konva": "^10.2.5",
+    "uplot": "^1.6.32"
   }
 }
