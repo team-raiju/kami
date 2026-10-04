@@ -14,24 +14,44 @@
 @theme {
   --font-title: "Amanojaku", "Noto Sans JP", sans-serif;
   --font-jp: "Zen Maru Gothic", sans-serif;
+
+  --color-canvas: #090e13;
+  --color-surface: #0f171f;
+  --color-surface-elevated: #17232e;
+  --color-surface-box: #0b1218;
+
+  --color-border-subtle: #141f29;
+  --color-border-default: #1e2d3b;
+  --color-border-accent: #2b3e52;
+
+  --color-iris: #a8aee8;
+  --color-flamingo: #f08da0;
+  --color-seafoam: #76c0b3;
+  --color-glacial: #68b5a7;
+  --color-amber-soft: #e5b974;
+
+  --color-content-primary: #eaf3f6;
+  --color-content-secondary: #849caa;
+  --color-content-muted: #4b5d69;
 }
 
 @utility scroll-* {
   scrollbar-width: thin;
-  scrollbar-color: --value(--color-*) #111827;
+  scrollbar-color: --value(--color-*) #090e13;
 
   &::-webkit-scrollbar {
-    width: 10px;
-    height: 10px;
+    width: 8px;
+    height: 8px;
   }
 
   &::-webkit-scrollbar-track {
-    background: #111827;
+    background: #090e13;
   }
 
   &::-webkit-scrollbar-thumb {
     background: --value(--color-*);
-    border: 2px solid #111827;
+    border: 2px solid #090e13;
+    border-radius: 4px;
   }
 
   &::-webkit-scrollbar-thumb:hover {

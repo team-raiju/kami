@@ -60,18 +60,18 @@ export function getMovementColor(type: number): string {
   const cat = getMovementCategory(type);
   switch (cat) {
     case "forward":
-      return "#38bdf8"; // Sky Blue
+      return "#76c0b3"; // Seafoam
     case "diagonal":
-      return "#10b981"; // Neon Emerald
+      return "#a8aee8"; // Dusk Iris
     case "turn90":
-      return "#f59e0b"; // Amber
+      return "#e5b974"; // Soft Amber
     case "turn180":
-      return "#ef4444"; // Crimson Red
+      return "#f08da0"; // Flamingo
     case "turn45":
-      return "#ec4899"; // Fuchsia Pink
+      return "#68b5a7"; // Glacial
     case "control":
     default:
-      return "#94a3b8"; // Slate Gray
+      return "#849caa"; // Content Secondary
   }
 }
 

@@ -7,33 +7,33 @@
   let fujinCanvasTab = $state<"maze" | "charts">("maze");
 </script>
 
-<div class="flex h-full w-full flex-col border border-gray-500/25 font-mono text-purple-500 min-h-0 overflow-hidden">
-  <div class="flex flex-row items-center bg-purple-500/10 shrink-0">
+<div class="flex h-full w-full flex-col border border-border-default bg-surface font-mono text-content-primary min-h-0 overflow-hidden">
+  <div class="flex flex-row items-center border-b border-border-default bg-surface-elevated/30 shrink-0">
     {#if tool === "fujin"}
       <div class="flex flex-row">
         <button
           onclick={() => (fujinCanvasTab = "maze")}
-          class={`cursor-pointer px-3 py-1 text-xs font-bold uppercase transition-colors ${
+          class={`cursor-pointer px-3 py-1 text-xs font-bold uppercase tracking-wider transition-colors ${
             fujinCanvasTab === "maze"
-              ? "bg-purple-500 text-black"
-              : "text-purple-400 hover:bg-purple-500/20"
+              ? "bg-iris text-canvas font-bold"
+              : "text-content-secondary hover:text-content-primary hover:bg-surface-elevated/40"
           }`}
         >
           Maze
         </button>
         <button
           onclick={() => (fujinCanvasTab = "charts")}
-          class={`cursor-pointer px-3 py-1 text-xs font-bold uppercase transition-colors ${
+          class={`cursor-pointer px-3 py-1 text-xs font-bold uppercase tracking-wider transition-colors ${
             fujinCanvasTab === "charts"
-              ? "bg-purple-500 text-black"
-              : "text-purple-400 hover:bg-purple-500/20"
+              ? "bg-iris text-canvas font-bold"
+              : "text-content-secondary hover:text-content-primary hover:bg-surface-elevated/40"
           }`}
         >
           Charts
         </button>
       </div>
     {:else}
-      <span class="inline-block bg-purple-500 px-2 py-1 text-xs font-bold text-black uppercase">
+      <span class="inline-block bg-iris px-2.5 py-1 text-xs font-bold text-canvas uppercase tracking-wider">
         {tool === "raijin" ? "Track" : tool}
       </span>
     {/if}
@@ -51,7 +51,9 @@
         </div>
       {/if}
     {:else if tool === "raijin"}
-      <Track />
+      <div class="h-full w-full min-h-0 min-w-0 flex items-center justify-center">
+        <Track />
+      </div>
     {:else}
       <div class="flex grow items-center justify-center bg-gray-900/50">
         <span class="text-4xl font-bold text-amber-500 uppercase opacity-20">{tool}</span>

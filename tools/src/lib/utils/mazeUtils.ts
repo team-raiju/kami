@@ -57,22 +57,22 @@ export function stringToMazeState(mazeString: string): MazeState {
 
 export function getHeatmapColor(value: number, min: number, max: number): string {
   if (min === max) {
-    return "#00ff00";
+    return "#76c0b3";
   }
 
   const t = Math.max(0, Math.min(1, (value - min) / (max - min)));
 
-  let r, g, b;
+  let r: number, g: number, b: number;
   if (t < 0.5) {
     const p = t * 2;
-    r = 0;
-    g = Math.round(255 * p);
-    b = Math.round(255 * (1 - p));
+    r = Math.round(118 + (229 - 118) * p);
+    g = Math.round(192 + (185 - 192) * p);
+    b = Math.round(179 + (116 - 179) * p);
   } else {
     const p = (t - 0.5) * 2;
-    r = Math.round(255 * p);
-    g = Math.round(255 * (1 - p));
-    b = 0;
+    r = Math.round(229 + (168 - 229) * p);
+    g = Math.round(185 + (174 - 185) * p);
+    b = Math.round(116 + (232 - 116) * p);
   }
 
   return `rgb(${r},${g},${b})`;

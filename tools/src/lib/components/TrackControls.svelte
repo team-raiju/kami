@@ -172,203 +172,203 @@
   }
 </script>
 
-<div class="grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Track Explorer</div>
+<div class="grid grid-cols-2 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-2 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">Track Explorer</div>
   <div class="col-span-2 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">Idx:</span>
+    <span class="text-xs text-iris font-semibold">Idx:</span>
     <button
       onclick={() => (selectedPointIndex = Math.max(0, selectedPointIndex - 1))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&lt;</button
+      class="cursor-pointer rounded bg-iris/10 border border-iris/25 px-1 text-xs text-iris">&lt;</button
     >
     <input
       type="range"
       min="0"
       max={Math.max(0, track.state.points.length - 1)}
       bind:value={selectedPointIndex}
-      class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-amber-500/30 accent-amber-500"
+      class="h-1 flex-1 cursor-pointer appearance-none rounded-full bg-surface-elevated accent-iris"
     />
     <button
       onclick={() => (selectedPointIndex = Math.min(track.state.points.length - 1, selectedPointIndex + 1))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500">&gt;</button
+      class="cursor-pointer rounded bg-iris/10 border border-iris/25 px-1 text-xs text-iris">&gt;</button
     >
-    <span class="text-xs text-amber-500">{selectedPointIndex}/{track.state.points.length}</span>
+    <span class="text-xs text-content-secondary">{selectedPointIndex}/{track.state.points.length}</span>
   </div>
-  <div class="col-span-2 text-xs text-amber-500">{selectedPointInfo}</div>
+  <div class="col-span-2 text-xs text-content-secondary">{selectedPointInfo}</div>
 </div>
 
-<div class="grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Calculate Shortcut</div>
-  <button onclick={handleMovingAverage} class="cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20">
+<div class="grid grid-cols-2 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-2 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">Calculate Shortcut</div>
+  <button onclick={handleMovingAverage} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-iris uppercase hover:bg-iris/20 font-semibold transition-colors">
     Moving Average
   </button>
   <div class="flex flex-row items-center gap-1">
-    <span class="text-sm text-amber-500">Window:</span>
-    <button onclick={decrementK} class="cursor-pointer rounded bg-amber-500/5 px-2 py-1 text-amber-500 hover:bg-amber-500/20"> &lt; </button>
-    <span class="min-w-[2ch] text-center text-amber-500">{k}</span>
-    <button onclick={incrementK} class="cursor-pointer rounded bg-amber-500/5 px-2 py-1 text-amber-500 hover:bg-amber-500/20"> &gt; </button>
-    <span class="mx-1 h-4 w-px bg-amber-500/50"></span>
-    <button onclick={handleClearShortcut} class="cursor-pointer rounded bg-amber-500/5 px-2 py-1 text-amber-500 hover:bg-amber-500/20" title="Clear">
+    <span class="text-sm text-iris">Window:</span>
+    <button onclick={decrementK} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-iris hover:bg-iris/20 transition-colors"> &lt; </button>
+    <span class="min-w-[2ch] text-center text-iris font-bold">{k}</span>
+    <button onclick={incrementK} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-iris hover:bg-iris/20 transition-colors"> &gt; </button>
+    <span class="mx-1 h-4 w-px bg-border-default"></span>
+    <button onclick={handleClearShortcut} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-iris hover:bg-iris/20 transition-colors" title="Clear">
       &#x2205;
     </button>
   </div>
 </div>
-<div class="mt grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">
+<div class="mt grid grid-cols-2 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-2 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">
     Dijkstra Shortcut {isCalculating ? "(calculating...)" : ""}
   </div>
   <button
     onclick={handleDijkstraShortcut}
-    class="col-span-2 cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20 disabled:opacity-50"
+    class="col-span-2 cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-iris uppercase hover:bg-iris/20 font-semibold transition-colors disabled:opacity-40"
     disabled={isCalculating}
   >
     {isCalculating ? "..." : "Calculate"}
   </button>
   <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">WL:</span>
+    <span class="text-xs text-iris font-semibold">WL:</span>
     <button
       onclick={() => (windowLarge = Math.max(2, windowLarge - 2))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &lt;
     </button>
-    <span class="text-xs text-amber-500">{windowLarge}</span>
+    <span class="text-xs text-content-secondary font-bold">{windowLarge}</span>
     <button
       onclick={() => (windowLarge += 2)}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &gt;
     </button>
   </div>
   <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">WS:</span>
+    <span class="text-xs text-iris font-semibold">WS:</span>
     <button
       onclick={() => (windowSmall = Math.max(2, windowSmall - 2))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &lt;
     </button>
-    <span class="text-xs text-amber-500">{windowSmall}</span>
+    <span class="text-xs text-content-secondary font-bold">{windowSmall}</span>
     <button
       onclick={() => (windowSmall += 2)}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &gt;
     </button>
   </div>
   <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">Th:</span>
+    <span class="text-xs text-iris font-semibold">Th:</span>
     <button
       onclick={() => (sharpAngleThPi = Math.max(0.05, sharpAngleThPi - 0.05))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &lt;
     </button>
-    <span class="text-xs text-amber-500">{sharpAngleThPi.toFixed(2)}π</span>
+    <span class="text-xs text-content-secondary font-bold">{sharpAngleThPi.toFixed(2)}π</span>
     <button
       onclick={() => (sharpAngleThPi += 0.05)}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &gt;
     </button>
   </div>
   <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">LA:</span>
+    <span class="text-xs text-iris font-semibold">LA:</span>
     <button
       onclick={() => (angleLookahead = Math.max(1, angleLookahead - 1))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &lt;
     </button>
-    <span class="text-xs text-amber-500">{angleLookahead}</span>
+    <span class="text-xs text-content-secondary font-bold">{angleLookahead}</span>
     <button
       onclick={() => (angleLookahead += 1)}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &gt;
     </button>
   </div>
   <div class="col-span-1 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">CP:</span>
+    <span class="text-xs text-iris font-semibold">CP:</span>
     <button
       onclick={() => (cornerPadding = Math.max(0, cornerPadding - 1))}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &lt;
     </button>
-    <span class="text-xs text-amber-500">{cornerPadding}</span>
+    <span class="text-xs text-content-secondary font-bold">{cornerPadding}</span>
     <button
       onclick={() => (cornerPadding += 1)}
-      class="cursor-pointer rounded bg-amber-500/5 px-1 text-xs text-amber-500 disabled:opacity-50"
+      class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-1 text-xs text-iris disabled:opacity-40"
       disabled={isCalculating}
     >
       &gt;
     </button>
   </div>
 </div>
-<div class="mt grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Manual Shortcut</div>
-  <button onclick={handleResetShortcut} class="cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20">
+<div class="mt grid grid-cols-2 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-2 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">Manual Shortcut</div>
+  <button onclick={handleResetShortcut} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-iris uppercase hover:bg-iris/20 font-semibold transition-colors">
     Reset
   </button>
   <div class="col-span-2 flex flex-row items-center gap-1">
-    <span class="text-xs text-amber-500">From:</span>
-    <input type="number" bind:value={straightFrom} class="w-12 bg-amber-500/10 px-1 text-xs text-amber-500" />
-    <span class="text-xs text-amber-500">To:</span>
-    <input type="number" bind:value={straightTo} class="w-12 bg-amber-500/10 px-1 text-xs text-amber-500" />
-    <button onclick={handleStraighten} class="cursor-pointer bg-amber-500/10 px-2 py-1 text-xs text-amber-500 uppercase hover:bg-amber-500/20">
+    <span class="text-xs text-iris font-semibold">From:</span>
+    <input type="number" bind:value={straightFrom} class="w-12 rounded border border-border-default bg-surface-box px-1 text-xs text-iris" />
+    <span class="text-xs text-iris font-semibold">To:</span>
+    <input type="number" bind:value={straightTo} class="w-12 rounded border border-border-default bg-surface-box px-1 text-xs text-iris" />
+    <button onclick={handleStraighten} class="cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-xs text-iris uppercase hover:bg-iris/20 font-semibold transition-colors">
       Straighten
     </button>
   </div>
 </div>
-<div class="mt-auto grid grid-cols-2 gap-2 p-2">
-  <div class="col-span-2 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Robot Logs</div>
-  <button onclick={handleLogRead} class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled>
+<div class="mt-auto grid grid-cols-2 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-2 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">Robot Logs</div>
+  <button onclick={handleLogRead} class="w-full cursor-not-allowed rounded border border-border-default bg-surface-box/50 px-2 py-1 text-center text-content-muted uppercase text-xs" disabled>
     Read
   </button>
-  <button class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled> Import </button>
+  <button class="w-full cursor-not-allowed rounded border border-border-default bg-surface-box/50 px-2 py-1 text-center text-content-muted uppercase text-xs" disabled> Import </button>
 </div>
-<div class="mt grid grid-cols-3 gap-2 p-2">
-  <div class="col-span-3 border-b border-b-amber-500/50 px-3 text-sm font-bold text-amber-500 uppercase">Track</div>
+<div class="mt grid grid-cols-3 gap-2 p-2 font-mono text-content-primary">
+  <div class="col-span-3 border-b border-b-border-default px-3 text-sm font-bold text-iris uppercase tracking-wider">Track</div>
   <button
     onclick={handleTrackImport}
-    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+    class="w-full cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-xs text-iris uppercase hover:bg-iris/20 font-semibold transition-colors"
   >
     Import
   </button>
   <button
     onclick={handleTrackExport}
-    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+    class="w-full cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-xs text-iris uppercase hover:bg-iris/20 font-semibold transition-colors"
   >
     Export
   </button>
   <button
     onclick={handleShortcutExport}
-    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+    class="w-full cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-xs text-iris uppercase hover:bg-iris/20 font-semibold transition-colors"
   >
     Export SC
   </button>
   <button
     onclick={serial.readTrack}
-    class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase"
+    class="w-full cursor-not-allowed rounded border border-border-default bg-surface-box/50 px-2 py-1 text-center text-xs text-content-muted uppercase"
     disabled={!serial.connected}
   >
     Read
   </button>
-  <button class="w-full cursor-not-allowed bg-amber-500/7 px-2 py-1 text-center text-amber-500 uppercase" disabled={!serial.connected}>
+  <button class="w-full cursor-not-allowed rounded border border-border-default bg-surface-box/50 px-2 py-1 text-center text-xs text-content-muted uppercase" disabled={!serial.connected}>
     Write SC
   </button>
   <button
     onclick={() => (vaultOpen = true)}
-    class="w-full cursor-pointer bg-amber-500/10 px-2 py-1 text-center text-amber-500 uppercase hover:bg-amber-500/20"
+    class="w-full cursor-pointer rounded border border-iris/25 bg-iris/10 px-2 py-1 text-center text-xs text-iris uppercase hover:bg-iris/20 font-semibold transition-colors"
   >
     Vault
   </button>

@@ -25,21 +25,21 @@
 
   const updateWallLook = (wallObject: Konva.Line, isActive: boolean) => {
     if (isActive) {
-      wallObject.stroke("#c4b5fd");
+      wallObject.stroke("#d5e4eb");
       wallObject.strokeWidth(3.5);
       wallObject.opacity(1);
     } else {
-      wallObject.stroke("gray");
+      wallObject.stroke("#1e2d3b");
       wallObject.strokeWidth(1.5);
-      wallObject.opacity(0.2);
+      wallObject.opacity(0.45);
     }
   };
 
   function getHeatmapBgColor(dist: number, maxDist: number): string {
-    if (dist === 0) return "#10b981"; // emerald for goal
+    if (dist === 0) return "#76c0b3"; // seafoam for goal
     const t = Math.min(1.0, dist / Math.max(1, maxDist));
-    const hue = Math.round(180 - t * 110); // 180 (cyan) down to 70
-    return `hsl(${hue}, 85%, 28%)`;
+    const lightness = 12 + Math.round((1 - t) * 10);
+    return `hsl(205, 30%, ${lightness}%)`;
   }
 
   function getMetrics() {
@@ -322,7 +322,7 @@
             fontSize: Math.max(9, Math.round(cellSize * 0.28)),
             fontFamily: "monospace",
             fontStyle: dist === 0 ? "bold" : "normal",
-            fill: dist === 0 ? "#34d399" : "#cbd5e1",
+            fill: dist === 0 ? "#76c0b3" : "#849caa",
             opacity: dist === 0 ? 1.0 : 0.75,
             listening: false,
           });
@@ -352,7 +352,7 @@
         {
           name: "Classic BFS",
           data: algorithm.comparisonData.classic,
-          color: "#38bdf8",
+          color: "#76c0b3",
           dash: [6, 4],
           width: 2.5,
           opacity: 0.85,
@@ -360,7 +360,7 @@
         {
           name: "Time-Based",
           data: algorithm.comparisonData.timeBased,
-          color: "#f59e0b",
+          color: "#a8aee8",
           dash: undefined,
           width: 3.5,
           opacity: 0.95,
@@ -394,8 +394,8 @@
           x: toCanvasX(firstWp.x),
           y: toCanvasY(firstWp.y),
           radius: 5,
-          fill: "#22c55e",
-          stroke: "#ffffff",
+          fill: "#76c0b3",
+          stroke: "#090e13",
           strokeWidth: 1.5,
           listening: false,
         });
@@ -405,8 +405,8 @@
           x: toCanvasX(lastWp.x),
           y: toCanvasY(lastWp.y),
           radius: 6,
-          fill: "#f59e0b",
-          stroke: "#ffffff",
+          fill: "#a8aee8",
+          stroke: "#090e13",
           strokeWidth: 1.5,
           listening: false,
         });
@@ -458,7 +458,7 @@
           x: toCanvasX(wp.x),
           y: toCanvasY(wp.y),
           radius: 2.5,
-          fill: "#ffffff",
+          fill: "#d5e4eb",
           opacity: 0.6,
           listening: false,
         });
@@ -473,8 +473,8 @@
         x: toCanvasX(firstWp.x),
         y: toCanvasY(firstWp.y),
         radius: 5,
-        fill: "#22c55e",
-        stroke: "#ffffff",
+        fill: "#76c0b3",
+        stroke: "#090e13",
         strokeWidth: 1.5,
         listening: false,
       });
@@ -484,8 +484,8 @@
         x: toCanvasX(lastWp.x),
         y: toCanvasY(lastWp.y),
         radius: 6,
-        fill: "#f59e0b",
-        stroke: "#ffffff",
+        fill: "#a8aee8",
+        stroke: "#090e13",
         strokeWidth: 1.5,
         listening: false,
       });
@@ -511,10 +511,10 @@
           y: r * cellSize + 1.5,
           width: 2 * cellSize - 3,
           height: 2 * cellSize - 3,
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 2,
           dash: [6, 4],
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           opacity: 0.2,
           cornerRadius: 4,
           listening: false,
@@ -525,7 +525,7 @@
           x: cx,
           y: cy,
           radius: Math.max(6, cellSize * 0.28),
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 2,
           listening: false,
         });
@@ -535,7 +535,7 @@
           x: cx,
           y: cy,
           radius: Math.max(2.5, cellSize * 0.10),
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           listening: false,
         });
         cursorGroup.add(previewDot);
@@ -544,14 +544,14 @@
         const rad = Math.max(6, cellSize * 0.28);
         const chH = new Konva.Line({
           points: [cx - rad - armLen, cy, cx + rad + armLen, cy],
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 1.5,
           opacity: 0.8,
           listening: false,
         });
         const chV = new Konva.Line({
           points: [cx, cy - rad - armLen, cx, cy + rad + armLen],
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 1.5,
           opacity: 0.8,
           listening: false,
@@ -567,7 +567,7 @@
           fontSize: Math.max(8, Math.round(cellSize * 0.20)),
           fontFamily: "monospace",
           fontStyle: "bold",
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           align: "center",
           listening: false,
         });
@@ -583,10 +583,10 @@
           y: r * cellSize + 1.5,
           width: cellSize - 3,
           height: cellSize - 3,
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 2,
           dash: [4, 2],
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           opacity: 0.25,
           cornerRadius: 3,
           listening: false,
@@ -597,7 +597,7 @@
           x: cx,
           y: cy,
           radius: Math.max(6, cellSize * 0.28),
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 2,
           listening: false,
         });
@@ -607,7 +607,7 @@
           x: cx,
           y: cy,
           radius: Math.max(2.5, cellSize * 0.10),
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           listening: false,
         });
         cursorGroup.add(previewDot);
@@ -616,14 +616,14 @@
         const rad = Math.max(6, cellSize * 0.28);
         const chH = new Konva.Line({
           points: [cx - rad - armLen, cy, cx + rad + armLen, cy],
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 1.5,
           opacity: 0.8,
           listening: false,
         });
         const chV = new Konva.Line({
           points: [cx, cy - rad - armLen, cx, cy + rad + armLen],
-          stroke: "#38bdf8",
+          stroke: "#a8aee8",
           strokeWidth: 1.5,
           opacity: 0.8,
           listening: false,
@@ -639,7 +639,7 @@
           fontSize: Math.max(8, Math.round(cellSize * 0.20)),
           fontFamily: "monospace",
           fontStyle: "bold",
-          fill: "#38bdf8",
+          fill: "#a8aee8",
           align: "center",
           listening: false,
         });
@@ -807,7 +807,7 @@
         const tween = new Konva.Tween({
           node: wallShape,
           duration: 0.1,
-          stroke: "#ef4444",
+          stroke: "#f08da0",
           strokeWidth: 6,
           easing: Konva.Easings.EaseInOut,
         });

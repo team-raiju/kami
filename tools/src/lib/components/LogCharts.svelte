@@ -28,7 +28,7 @@
         unit: "m/s",
         keys: ["lin_vel_act", "lin_vel_tgt"],
         labels: ["Actual", "Target"],
-        colors: ["#38bdf8", "#f59e0b"],
+        colors: ["#76c0b3", "#e5b974"],
         dashes: [undefined as any, [5, 5]],
       },
       {
@@ -36,7 +36,7 @@
         unit: "rad/s",
         keys: ["ang_vel_act", "ang_vel_tgt"],
         labels: ["Actual", "Target"],
-        colors: ["#a855f7", "#ec4899"],
+        colors: ["#a8aee8", "#f08da0"],
         dashes: [undefined as any, [5, 5]],
       },
       {
@@ -44,7 +44,7 @@
         unit: "Duty (0-1000)",
         keys: ["pwm_left", "pwm_right"],
         labels: ["Left", "Right"],
-        colors: ["#10b981", "#06b6d4"],
+        colors: ["#76c0b3", "#68b5a7"],
       },
     ];
 
@@ -56,21 +56,21 @@
           unit: "Value",
           keys: ["vel_p", "vel_i"],
           labels: ["P Term", "I Term"],
-          colors: ["#3b82f6", "#60a5fa"],
+          colors: ["#76c0b3", "#a8aee8"],
         },
         {
           title: "Angular PID Terms",
           unit: "Value",
           keys: ["ang_p", "ang_i"],
           labels: ["P Term", "I Term"],
-          colors: ["#8b5cf6", "#c084fc"],
+          colors: ["#a8aee8", "#f08da0"],
         },
         {
           title: "Feedforward / Battery",
           unit: "FF / mV",
           keys: ["rotation_ff", "linear_ff", "battery"],
           labels: ["Rotation FF", "Linear FF", "Battery (mV)"],
-          colors: ["#f97316", "#fb923c", "#eab308"],
+          colors: ["#f08da0", "#e5b974", "#68b5a7"],
         },
       ];
     } else {
@@ -81,21 +81,21 @@
           unit: "Distance / Angle",
           keys: ["dist", "angle"],
           labels: ["Distance (mm)", "Angle (deg)"],
-          colors: ["#3b82f6", "#f43f5e"],
+          colors: ["#76c0b3", "#a8aee8"],
         },
         {
           title: "IR Sensor Distances",
           unit: "mm",
           keys: ["sens_l", "sens_fl", "sens_fr", "sens_r"],
           labels: ["Sens Left", "Sens Front-L", "Sens Front-R", "Sens Right"],
-          colors: ["#22c55e", "#eab308", "#f97316", "#ef4444"],
+          colors: ["#76c0b3", "#e5b974", "#f08da0", "#a8aee8"],
         },
         {
           title: "Battery & Variance",
           unit: "mV / Diff",
           keys: ["battery", "imu_diff"],
           labels: ["Battery (mV)", "IMU Diff"],
-          colors: ["#eab308", "#94a3b8"],
+          colors: ["#68b5a7", "#849caa"],
         },
       ];
     }
@@ -207,17 +207,17 @@
         },
         axes: [
           {
-            stroke: "#64748b",
-            grid: { stroke: "#1e293b", width: 1 },
-            ticks: { stroke: "#334155", width: 1 },
+            stroke: "#4b5d69",
+            grid: { stroke: "#141f29", width: 1 },
+            ticks: { stroke: "#1e2d3b", width: 1 },
             font: "9px monospace",
             size: 20,
             gap: 2,
           },
           {
-            stroke: "#64748b",
-            grid: { stroke: "#1e293b", width: 1 },
-            ticks: { stroke: "#334155", width: 1 },
+            stroke: "#4b5d69",
+            grid: { stroke: "#141f29", width: 1 },
+            ticks: { stroke: "#1e2d3b", width: 1 },
             font: "9px monospace",
             size: 36,
             gap: 2,
@@ -268,21 +268,21 @@
 
 <div
   bind:this={containerEl}
-  class="grid grid-cols-2 grid-rows-3 gap-2 p-2 w-full h-full min-h-0 min-w-0 overflow-hidden bg-black/95 select-none"
+  class="grid grid-cols-2 grid-rows-3 gap-2 p-2 w-full h-full min-h-0 min-w-0 overflow-hidden bg-canvas select-none"
 >
   {#if fujinLog.hasData}
     {#each getPanels(fujinLog.mode) as panel, i}
       <div
         bind:this={chartContainers[i]}
-        class="relative flex flex-col items-center justify-between rounded border border-gray-800 bg-gray-950/70 p-1 min-h-0 min-w-0 overflow-hidden"
+        class="relative flex flex-col items-center justify-between rounded border border-border-default bg-surface-box/90 p-1 min-h-0 min-w-0 overflow-hidden"
       ></div>
     {/each}
   {:else}
-    <div class="col-span-2 row-span-3 flex flex-col items-center justify-center gap-3 text-gray-500">
-      <span class="icon-[material-symbols--show-chart] text-5xl text-amber-500/30"></span>
-      <span class="text-sm font-bold text-gray-400 uppercase">No Telemetry Charts</span>
-      <p class="text-xs text-gray-600 max-w-sm text-center">
-        Go to the <strong class="text-amber-500/80">Log Inspector</strong> tab in Controls and upload a log file or pick one from the Vault to visualize robot telemetry.
+    <div class="col-span-2 row-span-3 flex flex-col items-center justify-center gap-3 text-content-muted">
+      <span class="icon-[material-symbols--show-chart] text-5xl text-iris/30"></span>
+      <span class="text-sm font-bold text-content-secondary uppercase tracking-wider">No Telemetry Charts</span>
+      <p class="text-xs text-content-muted max-w-sm text-center">
+        Go to the <strong class="text-iris font-semibold">Log Inspector</strong> tab in Controls and upload a log file or pick one from the Vault to visualize robot telemetry.
       </p>
     </div>
   {/if}
@@ -301,8 +301,9 @@
   :global(.u-title) {
     font-size: 10px !important;
     font-weight: bold !important;
-    color: #f59e0b !important;
+    color: #a8aee8 !important;
     text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
     height: 18px !important;
     line-height: 18px !important;
     margin: 0 !important;
@@ -319,7 +320,7 @@
   }
   :global(.u-legend) {
     font-size: 9px !important;
-    color: #cbd5e1 !important;
+    color: #849caa !important;
     height: 20px !important;
     line-height: 20px !important;
     margin: 0 !important;
@@ -332,7 +333,7 @@
     text-align: center !important;
   }
   :global(.u-legend .u-series th) {
-    color: #94a3b8 !important;
+    color: #4b5d69 !important;
     font-weight: normal !important;
     padding: 0 2px !important;
   }
